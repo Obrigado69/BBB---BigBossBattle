@@ -410,4 +410,14 @@ function initialiseBackground(){
 function render(){const previousHp=Object.fromEntries([...document.querySelectorAll('[data-hp-id]')].map(el=>[el.dataset.hpId,el.getBoundingClientRect().width/el.parentElement.getBoundingClientRect().width*100]));initialiseBackground();let content=state.screen==='fightMode'?fightMode():state.screen==='battleCharacters'?battleCharacters():state.screen==='welcome'?welcome():state.screen==='characters'?characters():state.screen==='home'?home():state.screen==='character'?character():state.screen==='fight'?fight():state.screen==='party'?party():state.screen==='history'?history():state.screen==='battle'&&b()?battleScreen():home();$('app').classList.toggle('art-layout',['welcome','home','fightMode','characters','character','battleCharacters','party','battle'].includes(state.screen));$('app').innerHTML=content;$('modalroot').innerHTML=modal();fitScreen();document.querySelectorAll('[data-hp-id]').forEach(el=>{const next=el.dataset.percent,old=previousHp[el.dataset.hpId];if(Number.isFinite(old)&&Math.abs(old-Number(next))>.01){el.style.width=old+'%';requestAnimationFrame(()=>requestAnimationFrame(()=>{if(el.isConnected)el.style.width=next+'%'}))}})}
 render();
 window.addEventListener('resize',fitScreen);
-</script><script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('BBB PWA:',err)));}</script></body></html>
+</script><script>if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' });
+      reg.update().catch(() => {});
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) reg.update().catch(() => {});
+      });
+    } catch (err) { console.warn('BBB PWA:', err); }
+  });
+}</script></body></html>

@@ -1,5 +1,17 @@
-const CACHE='bbb-static-v2';
-const CORE=['./','./index.html','./multiplayer.html','./manifest.webmanifest','./icons/bbb-192.png','./icons/bbb-512.png','./icons/bbb-180.png'];
-self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));self.skipWaiting();});
-self.addEventListener('activate',event=>{event.waitUntil((async()=>{for(const key of await caches.keys())if(key!==CACHE&&key.startsWith('bbb-'))await caches.delete(key);await self.clients.claim();})());});
-self.addEventListener('fetch',event=>{const req=event.request;if(req.method!=='GET')return;const url=new URL(req.url);if(url.origin!==self.location.origin)return;if(req.mode==='navigate'){event.respondWith(fetch(req).then(res=>{if(res.ok){const copy=res.clone();caches.open(CACHE).then(c=>c.put(req,copy));}return res;}).catch(()=>caches.match(req).then(c=>c||caches.match('./index.html'))));return;}event.respondWith(caches.match(req).then(cached=>{const network=fetch(req).then(res=>{if(res.ok)caches.open(CACHE).then(c=>c.put(req,res.clone()));return res;}).catch(()=>cached);return cached||network;}));});
+/* BBB PWA — network only: nunca servir ficheiros antigos da Cache Storage. */
+self.addEventListener('install', event => { self.skipWaiting(); });
+self.addEventListener('activate', event => {
+  event.waitUntil((async () => {
+    for (const key of await caches.keys()) {
+      if (key.startsWith('bbb-')) await caches.delete(key);
+    }
+    await self.clients.claim();
+  })());
+});
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  if (request.method !== 'GET') return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+  event.respondWith(fetch(new Request(request, { cache: 'no-store' })));
+});
