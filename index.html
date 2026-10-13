@@ -206,7 +206,7 @@ async function changeScreen(target,back=false,trigger=document.activeElement){
 }
 function goto(s,trigger){return changeScreen(s,false,trigger)}
 function goBack(){if(!screenHistory.length||transitionLocked)return;return changeScreen(screenHistory.at(-1),true)}
-function selectFightMode(mode,trigger){if(transitionLocked)return;if(mode==='multiplayer'){window.location.href='./multiplayer.html';return;}state.playMode=mode;goto('party',trigger)}
+function selectFightMode(mode,trigger){if(transitionLocked)return;state.playMode=mode;if(mode==='multiplayer'){goto('multiplayerEntry',trigger);return;}goto('party',trigger)}
 function selectBattleCharacter(id){if(!state.characters.some(p=>p.id===id))return;state.multiplayerCharacter=id;save();goBack()}
 function updateCharacterName(input){const p=state.characters.find(p=>p.id===state.primary);const value=input.value.trim();if(value)p.name=value;input.value=p.name;input.style.fontSize=Math.min(23.8325,180/Math.max(1,p.name.length*.65))+'px';save()}
 async function updateProfilePhoto(input){
