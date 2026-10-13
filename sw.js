@@ -1,4 +1,4 @@
-const CACHE='bbb-static-v1';
+const CACHE='bbb-static-v2';
 const CORE=['./','./index.html','./multiplayer.html','./manifest.webmanifest','./icons/bbb-192.png','./icons/bbb-512.png','./icons/bbb-180.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));self.skipWaiting();});
 self.addEventListener('activate',event=>{event.waitUntil((async()=>{for(const key of await caches.keys())if(key!==CACHE&&key.startsWith('bbb-'))await caches.delete(key);await self.clients.claim();})());});
