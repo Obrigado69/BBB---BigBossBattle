@@ -1,0 +1,394 @@
+<!doctype html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>BBB — Big Boss Battle</title><style>
+:root{color-scheme:dark;--bg:#0b1116;--pane:#151e27;--edge:#2b3945;--ink:#edf0e9;--muted:#9aa9b2;--acid:#d3f07e;--red:#fb796c;--gold:#f5cc79;font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#23362d,#0b1015 60%);color:var(--ink)}button,input{font:inherit}button{cursor:pointer;border:none}button:disabled{opacity:.35;cursor:default}.device{position:relative;max-width:420px;min-height:800px;margin:25px auto;background:#101820;border:1px solid #374751;border-radius:34px;overflow:hidden;box-shadow:0 30px 110px #000b}.screen{padding:25px 22px 105px;min-height:800px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.logo{font-weight:1000;letter-spacing:4px;color:var(--acid);font-size:13px}.tiny{font-size:10px;font-weight:850;letter-spacing:2.5px;text-transform:uppercase;color:var(--acid)}.muted{color:var(--muted)}.small{font-size:12px}.heading{font-size:34px;line-height:1.06;letter-spacing:-1.5px;margin:8px 0 12px;font-weight:900}.section{font-size:19px;margin:0 0 14px;letter-spacing:-.5px}.panel{background:var(--pane);border:1px solid var(--edge);padding:16px;border-radius:20px;margin:12px 0}.hero{position:relative;border-radius:24px;background:radial-gradient(circle at 66% 38%,#3d6245,#172922 55%,#132024);border:1px solid #416251;overflow:hidden;padding:22px;min-height:250px;display:flex;flex-direction:column;justify-content:space-between}.hero .beast{font-size:115px;position:absolute;right:-13px;bottom:-19px;filter:drop-shadow(0 15px 15px #080c0c);transform:rotate(-14deg)}.hero h2{font-size:28px;line-height:1.08;letter-spacing:-1px;max-width:200px;margin:9px 0}.hero>*:not(.beast){position:relative;z-index:1}.badge{display:inline-block;border:1px solid #77905d;color:var(--acid);border-radius:50px;padding:5px 9px;font-size:10px;font-weight:800;letter-spacing:1px}.bigbtn{width:100%;padding:17px;background:var(--acid);color:#142016;border-radius:14px;font-weight:900;letter-spacing:.4px;margin:8px 0}.secondary{background:#26343e;color:var(--ink)}.outline{border:1px solid #4a5b61;background:#1a252c;color:var(--ink)}.smallbtn{background:#28363f;border-radius:10px;color:#fff;padding:10px 12px;font-size:12px;font-weight:800}.back{border:0;background:none;color:var(--muted);padding:0 0 16px;font-weight:800}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.statbox{background:#202d33;border:1px solid #394850;border-radius:14px;text-align:center;padding:13px 4px}.statbox b{font-size:23px;display:block;margin:6px}.statbox span{font-size:11px;color:var(--muted)}.line{display:flex;align-items:center;justify-content:space-between;gap:10px}.sep{height:1px;background:var(--edge);margin:15px 0}.hp{height:9px;background:#35434c;border-radius:50px;overflow:hidden;margin:8px 0}.hp i{display:block;height:100%;background:var(--acid);border-radius:50px;transition:width .4s}.hp.enemy i{background:var(--red)}.tile{display:flex;align-items:center;justify-content:space-between;background:#1a2730;border:1px solid var(--edge);border-radius:15px;padding:14px;margin:9px 0;gap:9px}.tile.selected{border-color:var(--acid);background:#26372d}.tile.dead{opacity:.46}.tile .avatar{background:#35444c;width:39px;height:39px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;font-size:23px}.tile .detail{flex:1;min-width:0}.tile b{font-size:13px}.tick{width:23px;height:23px;border:1px solid #6b7a81;border-radius:7px;display:grid;place-items:center;color:#132017}.selected .tick{background:var(--acid)}.input{width:100%;background:#1c2a33;border:1px solid #40515a;color:#fff;border-radius:12px;padding:14px;margin:8px 0 12px}.nav{position:absolute;bottom:0;left:0;right:0;background:#111a22e8;border-top:1px solid #34434a;display:flex;justify-content:space-around;padding:13px 8px 20px}.nav button{background:transparent;color:#8c9aa4;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:800}.nav button.active{color:var(--acid)}.nav span{font-size:23px}.turntrack{display:flex;gap:6px;overflow:auto;padding-bottom:6px;scrollbar-width:none;margin-bottom:14px}.turnpill{flex-shrink:0;padding:8px 11px;background:#26333b;border:1px solid #3b4b53;border-radius:22px;color:#9eafb6;font-size:11px;font-weight:800}.turnpill.active{background:var(--acid);color:#19231a}.turnpill.dead{opacity:.3}.battleboss{text-align:center;background:radial-gradient(circle at center,#3c473a,#19222b 65%);border:1px solid #354740;padding:16px;border-radius:20px}.battleboss .beast{font-size:91px;line-height:1.1;filter:drop-shadow(0 12px 14px #000a)}.battleboss h2{margin:0;font-size:20px}.deckarea{display:flex;gap:18px;justify-content:center;align-items:center;margin:16px 0}.playingcard{height:126px;width:86px;flex-shrink:0;background:#f4f2e9;color:#26313a;border:3px solid #eee;border-radius:11px;box-shadow:0 8px 19px #0007;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:31px;font-weight:1000;transform-origin:center;animation:flip .45s ease}.playingcard.backcard{background:repeating-linear-gradient(45deg,#263d46 0 5px,#344d53 5px 10px);border:5px double var(--acid);color:var(--acid);font-size:32px}.playingcard.redsuit{color:#c84442}.playingcard.joker{font-size:18px;background:#e3c779}.playingcard small{font-size:27px}.deckclick{background:transparent;padding:0}.deckcaption{text-align:center;font-size:11px;color:var(--muted);margin-top:6px}.miniCards{display:flex;justify-content:center;gap:4px;flex-wrap:wrap}.minicard{padding:5px 7px;border-radius:6px;background:#f2eee3;color:#172028;font-weight:900;font-size:12px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.actions button{padding:15px 9px;background:#263640;color:#fff;border:1px solid #50616a;border-radius:14px;font-weight:800}.actions button:first-child{background:#392e2b;border-color:#76504d}.actions button:last-child{background:#283d31;border-color:#4c7b5b}.result{padding:12px;border-radius:14px;background:#2b3e33;color:#d4f4cd;text-align:center}.log{font-size:12px;max-height:125px;overflow:auto;color:#adbcc1}.log div{border-bottom:1px solid #33414c;padding:8px 0}.modalshade{position:absolute;inset:0;z-index:10;background:#030709d9;display:flex;align-items:center;justify-content:center;padding:24px}.modal{background:linear-gradient(#273044,#141e29);border:1px solid #596477;width:100%;border-radius:25px;padding:25px;text-align:center;box-shadow:0 20px 70px #000}.modal h2{font-size:25px;line-height:1.13}.die{margin:22px auto;border:0;background:transparent;display:block;font-size:104px;line-height:1;filter:drop-shadow(0 6px 15px #000)}.die.rolling{animation:spin .65s ease-in-out infinite}.rollnumber{font-size:60px;color:var(--acid);font-weight:1000}.pill{background:#263b33;color:var(--acid);padding:5px 9px;border-radius:50px;font-size:11px;font-weight:850}.rowwrap{display:flex;gap:7px;flex-wrap:wrap}.rowwrap button{min-width:41px}.center{text-align:center}.spaced{margin-top:18px}.hidden{display:none}@keyframes flip{from{transform:rotateY(90deg) scale(.8);opacity:.4}to{transform:rotateY(0) scale(1);opacity:1}}@keyframes spin{0%{transform:rotate(0) scale(.85)}50%{transform:rotate(180deg) scale(1.15)}100%{transform:rotate(360deg) scale(.85)}}@media(max-width:500px){body{background:#101820}.device{width:100%;min-height:100dvh;margin:0;border:0;border-radius:0;box-shadow:none}.screen{min-height:100dvh;padding-top:28px}}@media(min-width:501px){body:before{content:'PRÉ-VISUALIZAÇÃO MOBILE · 390 PX';display:block;text-align:center;color:#84958e;letter-spacing:3px;font-size:10px;font-weight:800;padding-top:18px}}
+
+/* v0.3 mobile polish */
+.turntimeline{display:flex;align-items:center;justify-content:center;overflow:hidden;gap:7px;width:100%;padding:12px 0 8px;mask-image:linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%)}
+.turnnode{height:77px;min-width:55px;max-width:76px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:1px solid #44534e;border-radius:13px;background:#20332e;color:#c2e2c5;transform:scale(calc(1 - var(--distance)*.085));transition:all .5s ease;opacity:calc(1 - var(--distance)*.17)}
+.turnnode.dead{opacity:.28!important}.turnnode.previous{background:#293037;color:#889199;border-color:#384047;filter:grayscale(1)}.turnnode.now{background:#d3f07e;border-color:#e3ff96;color:#142218;box-shadow:0 0 0 2px #d3f07e66;transform:scale(1.08);z-index:2;opacity:1}.turnnode.foe:not(.previous):not(.now){background:#4b2928;color:#ffc5b9;border-color:#88504b}.turnavatar{font-size:23px}.turnname{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;font-size:9px}.playerhealth{height:7px;margin:0 0 12px}.playerhealth i{background:linear-gradient(90deg,#79cdbb,#d3f07e)}.playingcard.revealedcard{position:relative;animation:flyReveal .72s cubic-bezier(.22,.72,.21,1) both;transform-style:preserve-3d}.deckclick:active .playingcard{transform:translateY(-10px)}@keyframes flyReveal{0%{transform:translateX(-115px) rotateY(180deg) rotate(-14deg) scale(.82);opacity:.12;filter:brightness(.3)}45%{transform:translateX(-35px) rotateY(95deg) rotate(-8deg) scale(.92);opacity:1;filter:brightness(1)}100%{transform:translateX(0) rotateY(0deg) rotate(0) scale(1);opacity:1;filter:brightness(1)}}.bossintent{background:#362927;border:1px solid #7b4a45;color:#ffd5c7;margin:12px 0;animation:intentIn .55s ease both;font-size:13px;font-weight:850}@keyframes intentIn{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:translateY(0)}}.battleboss{background:radial-gradient(circle at 50% 15%,#4b6444,#1a2929 68%)}.battleboss .beast{filter:drop-shadow(0 14px 20px #000c)}@media(prefers-reduced-motion:reduce){.playingcard.revealedcard,.bossintent{animation:none!important}}
+
+/* v0.4 — stone dungeon / mobile-first layout */
+body {background-color:#171b1b;background-image:linear-gradient(#080b0c55,#080b0caa),repeating-linear-gradient(0deg,transparent 0 48px,#090e10bb 49px 53px,transparent 54px 105px),repeating-linear-gradient(90deg,#39403e 0 93px,#202827 94px 99px,#414744 100px 194px,#252c2a 195px 200px);background-size:auto,auto,200px 106px;}
+.device {background-color:#171c1b;background-image:linear-gradient(#101918d9,#101918dc),repeating-linear-gradient(0deg,transparent 0 53px,#050a09cc 54px 58px,transparent 59px 116px),repeating-linear-gradient(90deg,#5d6057 0 115px,#343b36 116px 121px,#626459 122px 237px,#343a34 238px 244px);background-size:auto,auto,244px 117px;}
+.screen{background:transparent}.panel,.tile,.statbox{background:#17211fe9;backdrop-filter:blur(5px)}
+.battleboss{background:linear-gradient(145deg,#19251ede,#202b20df),repeating-linear-gradient(90deg,#3b423b 0 90px,#151f1b 93px 98px);box-shadow:inset 0 1px #6c786033}
+.partyhealth{margin:12px 0}.ownhealth{padding:13px 15px 9px;background:#172822ed;border:1px solid #57755d;border-radius:15px;box-shadow:0 4px 16px #0004}.ownhealth strong{font-size:14px}.ownhealth b{font-size:13px;color:#dcf2db}.ownhealth .hp{height:15px;margin:12px 0 4px;background:#303a34}.ownhealth .hp i{background:linear-gradient(90deg,#62b993,#d3f07e)}.allies{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.ally{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:calc(50% - 4px);flex:1;background:#222d2adf;border:1px solid #47574c;padding:10px;border-radius:10px;font-size:11px}.ally span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ally b{white-space:nowrap;color:#d3f07e}.ally.fallen{filter:grayscale(1);opacity:.5}.turntimeline{margin:2px -8px 0;padding:10px 2px 12px}.turnnode{min-width:0;padding:0 2px}.turnnode.now{box-shadow:0 0 16px #d3f07e55}
+@media(max-width:500px){body{background:#171c1b}.device{min-height:100dvh}.screen{padding:18px 16px 95px}.battleboss .beast{font-size:74px}.battleboss{padding:10px}.battleboss h2{font-size:18px}.turnnode{height:62px}.turnavatar{font-size:19px}}
+
+/* v0.5 — one-screen experience, card physically travels from deck to reveal slot */
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+body{min-height:0;touch-action:manipulation}
+.device{height:min(860px,calc(100dvh - 35px));min-height:0;overflow:hidden}
+.screen{height:auto;min-height:0;padding-bottom:86px;transform-origin:top center;overflow:visible}
+.deckarea{position:relative;isolation:isolate;gap:16px;margin:9px 0 7px}
+.playingcard{width:76px;height:108px;animation:none;backface-visibility:hidden;box-shadow:0 8px 19px #0008}
+.deckarea .deck-slot{width:76px;height:108px;flex-shrink:0;display:grid;place-items:center}
+.deckarea .deck-slot .playingcard{position:relative}
+.deckarea .card-placeholder{width:76px;height:108px;border:2px dashed #53626a;border-radius:12px;display:grid;place-items:center;color:#7c909c}
+.card-flight{position:fixed;z-index:999;pointer-events:none;perspective:1100px;will-change:transform;filter:drop-shadow(0 14px 15px #000b)}
+.card-flight .flip-inner{height:100%;width:100%;transform-style:preserve-3d;position:relative;transition:transform .48s cubic-bezier(.2,.7,.2,1)}
+.card-flight.face-up .flip-inner{transform:rotateY(180deg)}
+.card-flight .playingcard{position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden}
+.card-flight .face{transform:rotateY(180deg)}
+.draw-dim{opacity:.25!important;transition:opacity .16s}
+.top{margin-bottom:12px}.panel{padding:12px;margin:8px 0}.hero{min-height:205px;padding:17px}.heading{font-size:clamp(24px,4vh,32px)}
+.turntimeline{padding:5px 0 6px}.turnnode{height:55px}.turnavatar{font-size:18px}
+.battleboss{padding:7px}.battleboss .beast{font-size:55px}.battleboss h2{font-size:15px}
+.partyhealth{margin:6px 0}.ownhealth{padding:9px 12px 6px}.otherhealth{padding:7px!important}
+.deckarea .deckcaption{margin-top:3px}.bigbtn{padding:12px;margin:5px 0}.actions button{padding:10px 8px}
+.statbox{padding:9px 3px}.statbox b{font-size:19px}.tile{padding:9px;margin:5px 0}.section{margin-bottom:8px}.spaced{margin-top:10px}
+.log{max-height:44px;overflow:hidden}.log div{padding:4px 0}
+.modal{max-height:90%;overflow:hidden;padding:18px}.die{margin:12px auto;font-size:80px}
+@media(max-width:500px){.device{height:100dvh;min-height:0}.screen{min-height:0;padding:10px 13px 76px}.top{margin-bottom:8px}.nav{padding:8px 8px max(10px,env(safe-area-inset-bottom))}.battleboss .beast{font-size:48px}.turnnode{height:48px}}
+@media(prefers-reduced-motion:reduce){.card-flight .flip-inner{transition:none}}
+/* BBB — fixed phone preview (390 × 844 logical pixels) */
+html,body{width:100%;height:100%;min-height:0;overflow:hidden;overscroll-behavior:none}
+body:before{content:'BBB · PRÉ-VISUALIZAÇÃO MOBILE · 390 × 844';position:fixed;top:12px;left:0;right:0;padding:0;text-align:center;color:#a5b4ac;font-size:10px;font-weight:800;letter-spacing:2px}
+.device{position:absolute;left:50%;top:50%;width:390px;max-width:none;height:844px;min-height:0;margin:0;border:1px solid #536355;border-radius:30px;box-shadow:0 24px 80px #0009;transform:translate(-50%,-50%) scale(var(--preview-scale,1));transform-origin:center;overflow:hidden}
+.screen{width:100%;min-height:0;padding:16px 16px 76px}
+.nav{padding:10px 8px 16px}
+.turntrack,.log{overflow:hidden}
+@media(max-width:500px){body:before{display:none}.device{border-radius:24px}.screen{padding:16px 16px 76px}}
+.menu-screen{height:810px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:100px;padding:24px 10px}
+.game-title{text-align:center}.game-title h1{font-size:80px;letter-spacing:6px;line-height:1;margin:0;color:var(--acid)}.game-title p{font-size:22px;font-weight:800;margin:14px 0 0}
+.menu-buttons{width:100%;display:flex;flex-direction:column;gap:12px}.menu-buttons .bigbtn{min-height:56px;font-size:18px}
+.character-choice{width:100%;color:var(--ink);text-align:left}.character-list{display:grid;gap:4px}
+/* Supplied Illustrator artboards: preserve their original composition. */
+.screen.art-layout{position:absolute;inset:0;width:100%;height:100%;padding:0;zoom:1}
+.art-screen{position:relative;width:100%;height:100%;overflow:hidden;background:transparent}
+.menu-art,.art-control{position:absolute;display:block;user-select:none;-webkit-user-drag:none}
+.menu-art{object-fit:fill;pointer-events:none}
+.art-control img{display:block;width:100%;height:100%;pointer-events:none;user-select:none}
+.art-hit{position:absolute;left:5%;top:16%;width:90%;height:72%;padding:0;border:0;background:transparent;clip-path:polygon(0 25%,38% 25%,50% 0,62% 25%,100% 25%,96% 50%,100% 75%,62% 75%,50% 100%,38% 75%,0 75%,4% 50%);touch-action:manipulation}
+.art-control:has(.art-hit:hover) img{filter:brightness(1.08)}
+.art-control:has(.art-hit:active) img{filter:brightness(.88)}
+.art-control:has(.art-hit:focus-visible){outline:2px solid #ffd184;outline-offset:3px}
+
+.device.navigating #app,.device.navigating #modalroot{pointer-events:none}
+.art-control{transform-origin:center;will-change:transform}
+@font-face{font-family:Cinzel;src:url('assets/cinzel.ttf') format('truetype');font-weight:100 900;font-display:swap}
+.art-text-layer{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;font-family:Cinzel,Georgia,serif;fill:#fff}
+.back-control .art-hit{left:14%;top:32%;width:70%;height:32%;clip-path:none}
+.character-row-hit{position:absolute;left:4.5%;width:91%;height:15.7%;background:transparent;border:0;border-radius:12px}
+.character-row-hit:hover,.character-row-hit:focus-visible{background:#ffa4240b;outline:1px solid #d89c5e66}
+.roster-tools{position:absolute;top:81%;left:10%;width:80%;display:flex;align-items:center;justify-content:center;gap:15px;font-family:Cinzel,serif;font-size:12px}
+.roster-tools button,.profile-history{background:#100a06b0;border:1px solid #98632c;border-radius:3px;color:#f3d4a3;padding:8px;font-family:Cinzel,serif;font-size:11px}
+.profile-name-hit{position:absolute;left:49%;top:18%;width:47%;height:8%;background:transparent}
+.skill-upgrade{position:absolute;top:74.3%;width:21.4%;height:5.4%;background:transparent;color:white;font-family:Cinzel,serif;font-size:22.3393px;padding:0;border:0}
+.skill-upgrade:disabled{opacity:1;cursor:default}.skill-upgrade:not(:disabled):hover{color:#ffd080;text-shadow:0 0 10px #fc6c22}
+.profile-history{position:absolute;left:40%;top:83%;width:20%}
+.character-dialog{font-family:Cinzel,serif;background:linear-gradient(#261407,#080605);border-color:#9c6432}
+.profile-name-input{position:absolute;left:49%;top:18.25%;width:47%;height:4.5%;padding:0;background:transparent;border:0;border-bottom:1px solid transparent;border-radius:0;color:white;font-family:Cinzel,serif;font-weight:700;outline:none;text-overflow:ellipsis}
+.profile-name-input:focus{border-bottom-color:#d99a50;background:#100a0640}
+.portrait-photo{position:absolute;object-fit:cover;border-radius:50%;pointer-events:none}
+.portrait-upload{position:absolute;display:grid;place-items:center;border-radius:50%;cursor:pointer}
+.portrait-plus{font-family:Cinzel,serif;color:#f5ddb7;font-size:36px;line-height:1;text-shadow:0 2px 6px #000}
+.portrait-plus.has-photo{align-self:end;margin-bottom:5px;font-size:23px;background:#080605aa;border-radius:50%;width:28px;height:28px;text-align:center}
+.portrait-upload input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.portrait-upload:focus-within{outline:2px solid #e4a856;outline-offset:2px}
+/* Background persists outside screen rendering and navigation animations. */
+.device{background:#080605;isolation:isolate}
+.ambient-background{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:#080605 url('assets/menu-background.webp') center/100% 100% no-repeat}
+.screen{position:relative;z-index:1;background:transparent}
+#modalroot{position:absolute;inset:0;z-index:2;pointer-events:none}
+#modalroot .modalshade{pointer-events:auto}
+.ambient-light{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 93%,#ff4a091f,transparent 49%),radial-gradient(ellipse at 12% 35%,#ff9a0710,transparent 40%);animation:ambientGlow 9s ease-in-out infinite alternate}
+.ambient-ember{position:absolute;left:var(--x);bottom:-3%;width:var(--size);height:calc(var(--size)*2);border-radius:50%;background:#ffb75c;box-shadow:0 0 5px 1px #ff510a;opacity:0;animation:emberRise var(--duration) linear infinite;animation-delay:var(--delay);will-change:transform,opacity}
+@keyframes ambientGlow{from{opacity:.25}to{opacity:.85}}
+@keyframes emberRise{0%{transform:translate3d(0,0,0) rotate(-20deg);opacity:0}12%{opacity:.55}65%{opacity:.3}100%{transform:translate3d(var(--drift),-700px,0) rotate(20deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){.ambient-light,.ambient-ember{animation:none}.ambient-ember{display:none}}
+.fire-filter-defs{position:absolute;width:0;height:0;pointer-events:none}
+.ambient-fire{position:absolute;inset:0;background-image:var(--fire-image,url('assets/menu-background.webp'));background-position:center;background-size:100% 100%;filter:url(#bbb-fire-ripple) brightness(1.45) saturate(1.3);mix-blend-mode:screen;opacity:.4;mask-image:linear-gradient(to bottom,transparent 7%,#000 18%,transparent 32%,transparent 62%,#000 80%,transparent 93%);-webkit-mask-image:linear-gradient(to bottom,transparent 7%,#000 18%,transparent 32%,transparent 62%,#000 80%,transparent 93%);animation:fireFlicker 4.7s ease-in-out infinite}
+@keyframes fireFlicker{0%,100%{opacity:.22}23%{opacity:.4}42%{opacity:.28}61%{opacity:.48}79%{opacity:.3}}
+@media(prefers-reduced-motion:reduce){.ambient-fire,.fire-filter-defs{display:none}}
+.battle-option{position:absolute;width:27.0239%;height:4.3663%;background:transparent;padding:0;border:0;z-index:2;border-radius:3px}
+.battle-option svg{display:block;width:100%;height:100%;pointer-events:none}
+.battle-option.selected{outline:1px solid #ffd077;outline-offset:1px;filter:brightness(1.2) drop-shadow(0 0 3px #ff9c3566)}
+.battle-option:focus-visible,.party-slot-hit:focus-visible{outline:2px solid #ffd184}
+.party-slot{position:absolute;width:23.4978%;height:14.4%;z-index:2}
+.party-slot-hit{width:100%;height:100%;background:transparent;padding:0;border:0;border-radius:4px}
+.party-slot.selected{outline:1px solid #ffd077;outline-offset:4px;border-radius:4px;box-shadow:0 0 8px #ff9c3566;background:#ffd07708}
+.art-control:has(.art-hit:disabled){opacity:.5}
+
+/* BBB-07 combat artwork and live state */
+.combat-position{position:absolute;font-family:Cinzel,Georgia,serif;color:white}
+.combat-turn{position:absolute;width:100%;height:100%;pointer-events:none}.combat-turn.past{opacity:.38;filter:grayscale(.8)}
+.combat-initial{position:absolute;border-radius:50%;display:grid;place-items:center;font-size:13px;background:#130b07;color:#f5cc79;font-weight:700}
+.combat-hp{position:absolute;isolation:isolate}.combat-hp img{position:absolute;inset:0;width:100%;height:100%}.combat-hp-track{position:absolute;left:5%;right:5%;top:35%;height:30%;background:#190b08;border-radius:30px;overflow:hidden}.combat-hp-fill{height:100%;background:linear-gradient(90deg,#207639,#61e56e);box-shadow:0 0 8px #55df69;transition:width .65s cubic-bezier(.22,.61,.36,1)}.combat-hp.enemy .combat-hp-fill{background:linear-gradient(90deg,#9d1216,#ff4844);box-shadow:0 0 8px #fa302a}.combat-hp-value{position:absolute;inset:0;display:grid;place-items:center;font:700 7px Arial,sans-serif;text-shadow:0 1px 3px #000}
+.combat-deck{left:20.407%;top:58.4027%;width:24.0527%;height:14.837%;padding:0;background:none}.combat-deck .playingcard,.combat-reveal .playingcard{width:100%;height:100%;margin:0}.playingcard.backcard{padding:0;border:0;background:none;box-shadow:none}.backcard img{width:100%;height:100%;object-fit:fill}.combat-reveal{left:56.41%;top:58.53%;width:24%;height:14.6%;border:1px solid #b37713;border-radius:6px;display:grid;place-items:center;background:#05040366}.combat-reveal .playingcard{font-size:29px}.combat-chain{left:81.5%;top:61%;width:16%;height:12%;display:flex;flex-direction:column;justify-content:center;font-size:11px;overflow:hidden;word-break:break-word;text-align:center;gap:5px}.combat-status{left:12%;top:76.6%;width:76%;height:4.2%;font:9px/1.4 Cinzel,serif;text-align:center;display:grid;place-items:center;color:#f1ce9b}.combat-history{left:7.436%;top:81.516%;width:84.615%;height:10.55%;border:1px solid #b87613;border-radius:10px;padding:8px 10px;overflow:hidden;background:#07050385;font:10px/1.4 Arial,sans-serif;color:#dfd0bb;display:flex;flex-direction:column;gap:4px}.combat-history strong{font-weight:800;color:white}.combat-history div{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.combat-history .history-label{font:7px Cinzel,serif;color:#d9a860;letter-spacing:1px}.combat-forfeit{left:36.375%;top:92.84%;width:27.024%;height:4.366%;background:none;padding:0}.combat-forfeit svg{width:100%;height:100%}.combat-modal{background:linear-gradient(#25140b,#090605);border-color:#b57826;font-family:Cinzel,serif}.combat-modal h2{font-size:20px}.combat-modal .rowwrap{justify-content:center}.combat-modal .tile{width:100%;color:white;text-align:left}.combat-modal .smallbtn,.combat-modal .bigbtn{background:#482912;color:#ffe3a5;border:1px solid #ad762e}
+@media(prefers-reduced-motion:reduce){.combat-hp-fill{transition:none}}
+
+</style></head><body><div class="device"><div id="ambient-background" class="ambient-background" aria-hidden="true"><svg class="fire-filter-defs" aria-hidden="true"><defs><filter id="bbb-fire-ripple" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency=".015 .035" numOctaves="2" seed="7" result="heat"><animate attributeName="baseFrequency" values=".015 .035;.018 .042;.015 .035" dur="9s" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" in2="heat" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg><div class="ambient-fire"></div><div class="ambient-light"></div><div id="ambient-embers"></div></div><div id="app" class="screen"></div><div id="modalroot"></div></div><script>
+const BOSS_ID='mantis',BOSS_HP=50,MAX_PARTY=3;
+const storeKey='mantis_mobile_preview_v2';
+const fresh=(id,name)=>({id,name,level:1,maxHp:25,attack:0,defense:0,heal:0,points:0,defeated:[],lastBattles:[]});
+let state;try{state=JSON.parse(localStorage.getItem(storeKey))}catch{}if(!state||!Array.isArray(state.characters))state={characters:[fresh('p1','Aventureiro')],primary:'p1',screen:'home',mode:'digital',controller:'game',chosen:['p1']};
+state.screen='welcome';state.battle=null;let revivalRoll=null,rolling=false,revealed=false,bossTimer=null,transitionLocked=false,cardBusy=false,bossStatus='',timelineIndex=0;
+const $=id=>document.getElementById(id),esc=v=>String(v).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[x]));
+const save=()=>{const {battle,...persistent}=state;localStorage.setItem(storeKey,JSON.stringify(persistent))};
+if(state.characters.length>MAX_PARTY){state.extraCharacters=[...(state.extraCharacters||[]),...state.characters.slice(MAX_PARTY)];state.characters=state.characters.slice(0,MAX_PARTY)}
+while(state.characters.length<MAX_PARTY){const slot=state.characters.length+1;state.characters.push(fresh('slot-'+slot,'Personagem '+slot))}
+// Os pontos de skill são ganhos apenas na primeira vitória contra cada Boss.
+if(!state.characters.some(p=>p.id===state.primary))state.primary=state.characters[0].id;
+state.chosen=(state.chosen||[state.primary]).filter(id=>state.characters.some(p=>p.id===id));if(!state.chosen.length)state.chosen=[state.primary];save();
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const deck=(isBoss=false)=>shuffle([...['♠','♥','♦','♣'].flatMap(s=>[...'23456789', '10','A',...(isBoss?[]:['J','Q','K'])].map(v=>({v,s}))),{v:'JOKER',s:'★'},{v:'JOKER',s:'☆'}]);
+const b=()=>state.battle;const live=()=>b().players.filter(p=>p.alive);const actor=()=>b().turn<b().players.length?b().players[b().turn]:{id:'boss',name:'King Mantis'};
+const value=c=>c?.v==='A'?12:Number(c?.v)||0;
+const calc=()=>{const chain=b().chain,base=value(chain.at(-1))*2**chain.filter(c=>c.v==='JOKER').length;return {base,k:chain.filter(c=>c.v==='K').length,q:chain.filter(c=>c.v==='Q').length,j:chain.filter(c=>c.v==='J').length}};
+const log=msg=>b().history.unshift(msg);
+const screenHistory=[];
+async function changeScreen(target,back=false,trigger=document.activeElement){
+ if(transitionLocked||target===state.screen)return;
+ const screen=$('app'),frame=document.querySelector('.device');
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ transitionLocked=true;frame.classList.add('navigating');screen.setAttribute('aria-busy','true');
+ try{
+  if(!reduced){
+   const button=trigger?.closest?.('.art-control')||trigger?.closest?.('button');
+   const pulse=button?.animate([{transform:'scale(1)',easing:'cubic-bezier(.45,0,.55,1)'},{transform:'scale(1.025)',offset:.5,easing:'cubic-bezier(.45,0,.55,1)'},{transform:'scale(1)'}],{duration:520,easing:'linear'});
+   const fade=screen.animate([{opacity:1},{opacity:0}],{duration:420,delay:pulse?180:0,easing:'cubic-bezier(.45,0,.55,1)',fill:'forwards'});
+   await Promise.all([pulse?.finished,fade.finished]);
+  }
+  if(back)screenHistory.pop();else screenHistory.push(state.screen);
+  state.screen=target;save();render();
+  // New content fades in after the outgoing screen has completely disappeared.
+  if(!reduced){
+   const outgoing=screen.getAnimations();
+   screen.style.opacity='0';outgoing.forEach(animation=>animation.cancel());
+   const incoming=screen.animate([{opacity:0},{opacity:1}],{duration:480,easing:'cubic-bezier(.45,0,.55,1)',fill:'forwards'});
+   await incoming.finished;screen.style.opacity='';incoming.cancel();
+  }
+ }finally{
+  screen.style.opacity='';screen.getAnimations().forEach(animation=>animation.cancel());
+  screen.removeAttribute('aria-busy');frame.classList.remove('navigating');transitionLocked=false;
+ }
+}
+function goto(s,trigger){return changeScreen(s,false,trigger)}
+function goBack(){if(!screenHistory.length||transitionLocked)return;return changeScreen(screenHistory.at(-1),true)}
+function selectFightMode(mode,trigger){if(transitionLocked)return;if(mode==='multiplayer'){window.location.href='multiplayer.html';return;}state.playMode=mode;goto('party',trigger)}
+function selectBattleCharacter(id){if(!state.characters.some(p=>p.id===id))return;state.multiplayerCharacter=id;save();goBack()}
+function updateCharacterName(input){const p=state.characters.find(p=>p.id===state.primary);const value=input.value.trim();if(value)p.name=value;input.value=p.name;input.style.fontSize=Math.min(23.8325,180/Math.max(1,p.name.length*.65))+'px';save()}
+async function updateProfilePhoto(input){
+ const file=input.files?.[0],p=state.characters.find(p=>p.id===state.primary);if(!file||!p)return;
+ if(file.size>20*1024*1024){alert('Escolhe uma imagem com menos de 20 MB.');input.value='';return}
+ const url=URL.createObjectURL(file);
+ try{
+  const image=new Image();image.src=url;await image.decode();
+  const ratio=Math.min(1,512/Math.max(image.naturalWidth,image.naturalHeight));
+  const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(image.naturalWidth*ratio));canvas.height=Math.max(1,Math.round(image.naturalHeight*ratio));
+  const context=canvas.getContext('2d');context.fillStyle='#080605';context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(image,0,0,canvas.width,canvas.height);
+  const previous=p.photo;p.photo=canvas.toDataURL('image/jpeg',.85);
+  try{save()}catch(error){p.photo=previous;throw error}
+  render();
+ }catch{alert('Não foi possível guardar esta fotografia. Experimenta uma imagem PNG ou JPG.')}finally{URL.revokeObjectURL(url);input.value=''}
+}
+function choosePrimary(id){state.primary=id;goto('character')}
+function spend(k){let p=state.characters.find(p=>p.id===state.primary);if(p.points>0){p[k]++;p.points--;save();render()}}
+function pick(id){if(state.chosen.includes(id)){if(state.chosen.length>1)state.chosen=state.chosen.filter(x=>x!==id)}else if(state.chosen.length<MAX_PARTY)state.chosen.push(id);save();render()}
+function setMode(x){state.mode=x;save();render()};function setController(x){state.controller=x;save();render()}
+function begin(){combatDialog=null;if(state.playMode==='multiplayer')return;clearTimeout(bossTimer);const players=state.chosen.map(id=>state.characters.find(p=>p.id===id)).filter(Boolean).map(p=>({...p,hp:p.maxHp,alive:true,reviveUsed:false,guard:0}));if(!players.length)return;const max=Math.ceil(BOSS_HP*(1+.5*(players.length-1)));timelineIndex=0;bossStatus='';state.battle={players,boss:{hp:max,maxHp:max},decks:Object.fromEntries([...players.map(p=>p.id),'boss'].map(id=>[id,deck(id==='boss')])),turn:0,round:1,phase:'draw',chain:[],target:null,pending:null,outcome:null,rewarded:false,history:['A dungeon começou.'],controller:state.controller,mode:state.mode};revealed=false;goto('battle')}
+function cardHTML(c,back=false){if(back)return '<div class="playingcard backcard"><img src="assets/card-back.webp" alt="Baralho" draggable="false"></div>';return `<div class="playingcard ${c?.v==='JOKER'?'joker':(['♥','♦'].includes(c?.s)?'redsuit':'')}">${esc(c?.v||'?')}<small>${esc(c?.s||'')}</small></div>`}
+function drawCard(v){
+  if(!b()||b().phase!=='draw'||transitionLocked||cardBusy)return;
+  const id=actor().id;let c;
+  if(b().mode==='physical'&&!(id==='boss'&&b().controller==='game')){if(!v)return;c={v,s:''}}
+  else{if(!b().decks[id].length)b().decks[id]=deck(id==='boss');c=b().decks[id].shift()}
+  if(id==='boss'&&!['2','3','4','5','6','7','8','9','10','A','JOKER'].includes(c.v))return;
+  b().chain.push(c);revealed=true;cardBusy=true;
+  log(`${actor().name}: ${c.v}${c.s}`);
+  const continueChain=['K','Q','J','JOKER'].includes(c.v)&&id!=='boss'||c.v==='JOKER'&&id==='boss';
+  if(id==='boss')bossStatus=continueChain?'O King Mantis revelou um Joker!':'O King Mantis prepara o ataque…';
+  render();
+  animateDraw(c);
+  setTimeout(()=>{
+    if(!b()||state.screen!=='battle')return;
+    cardBusy=false;
+    if(continueChain){render();if(id==='boss'&&b().controller==='game')scheduleBoss(1450);return}
+    b().phase=id==='boss'?'bossAction':'action';render();
+    if(id==='boss'&&b().controller==='game')scheduleBoss(1900);
+  },1040);
+}
+function guardApply(){const p=actor(),j=calc().j;if(j)p.guard+=2*j}
+function endTurn(){
+ const t=b();t.completedTurns=[...(t.completedTurns||[]),actor().id].slice(-3);timelineIndex++;bossStatus='';t.chain=[];t.target=null;t.pending=null;revealed=false;
+ const steps=t.players.length+1;
+ let n=(t.turn+1)%steps;
+ if(n===0)t.round++;
+ let attempts=0;
+ while(n<t.players.length&&!t.players[n].alive&&attempts<steps){n=(n+1)%steps;if(n===0)t.round++;attempts++}
+ if(!live().length){finish(false);return}
+ t.turn=n;
+ if(n<t.players.length)t.players[n].guard=0;
+ t.phase='draw';render();
+ if(n===t.players.length&&t.controller==='game'){bossStatus='O King Mantis aproxima-se…';render();scheduleBoss(1400)}
+}
+function playerAction(type){if(b().phase!=='action')return;const p=actor(),e=calc();if(type==='attack'){const dmg=e.base+e.k*2+p.attack;b().boss.hp=Math.max(0,b().boss.hp-dmg);guardApply();log(`${p.name} causou ${dmg} de dano.`);if(b().boss.hp===0){finish(true);return}}else{const target=b().players.find(x=>x.id===b().target&&x.alive);if(!target)return;const amount=Math.min(target.maxHp-target.hp,e.base+e.q*2+p.heal);target.hp+=amount;guardApply();log(`${p.name} curou ${target.name}: +${amount} HP.`)}endTurn()}
+function target(id){b().target=id;render();const x=$('healtarget');if(x&&b().phase==='action')x.classList.remove('hidden')}
+function bossStrike(){if(!b()||b().phase!=='bossAction')return;const l=live();if(!l.length){finish(false);return}const p=l.find(p=>p.id===b().target)||l[Math.floor(Math.random()*l.length)];bossStatus=`O King Mantis ataca ${p.name}!`;render();const raw=calc().base,dmg=Math.max(0,raw-p.defense-p.guard);p.hp=Math.max(0,p.hp-dmg);p.guard=0;log(`O King Mantis atacou ${p.name}: ${dmg} de dano.`);if(p.hp===0){if(!p.reviveUsed){b().pending={id:p.id,damage:dmg};b().phase='revive';revivalRoll=null;rolling=false;render();return}p.alive=false;log(`${p.name} morreu definitivamente.`);if(!live().length){finish(false);return}}endTurn()}
+function roll(){if(rolling||revivalRoll!==null||b()?.phase!=='revive')return;rolling=true;render();setTimeout(()=>{if(!b()?.pending)return;revivalRoll=Math.floor(Math.random()*20)+1;rolling=false;const p=b().players.find(p=>p.id===b().pending.id),ok=revivalRoll>b().pending.damage;p.reviveUsed=true;p.alive=ok;p.hp=ok?1:0;log(`${p.name} lançou ${revivalRoll} no D20: ${ok?'ressuscitou com 1 HP':'morreu definitivamente'}.`);render()},780)}
+function closeRevive(){if(revivalRoll===null)return;const defeated=!live().length;b().pending=null;if(defeated)finish(false);else endTurn()}
+function finish(won){clearTimeout(bossTimer);const t=b();if(!t||t.outcome)return;t.phase='finished';t.outcome=won?'victory':'defeat';if(won&&!t.rewarded){for(const p of t.players){let original=state.characters.find(c=>c.id===p.id);if(!original.defeated.includes(BOSS_ID)){original.defeated.push(BOSS_ID);original.level++;original.maxHp++;original.points++}original.lastBattles=[{result:'Vitória',boss:'King Mantis',date:new Date().toLocaleDateString('pt-PT')},...(original.lastBattles||[])].slice(0,8)}t.rewarded=true}else if(!won){for(const p of t.players){let original=state.characters.find(c=>c.id===p.id);original.lastBattles=[{result:'Derrota',boss:'King Mantis',date:new Date().toLocaleDateString('pt-PT')},...(original.lastBattles||[])].slice(0,8)}}save();render()}
+function exitBattle(){clearTimeout(bossTimer);if(!b()?.outcome&&!confirm('Abandonar esta dungeon?'))return;state.battle=null;goto('home')}
+function scheduleBoss(ms){clearTimeout(bossTimer);bossTimer=setTimeout(()=>{if(!b()||state.screen!=='battle'||actor().id!=='boss'||b().controller!=='game')return;if(b().phase==='draw')drawCard();else if(b().phase==='bossAction'){const pool=live();const victim=pool[Math.floor(Math.random()*pool.length)];if(!victim)return; b().target=victim.id;bossStatus=`O King Mantis ataca ${victim.name}!`;render();scheduleBossHit(1350)}},ms)}
+function scheduleBossHit(ms){clearTimeout(bossTimer);bossTimer=setTimeout(()=>{if(b()&&state.screen==='battle'&&actor().id==='boss'&&b().phase==='bossAction')bossStrike()},ms)}
+const track=()=>{const t=b(),sequence=[...t.players.map(p=>({id:p.id,label:p.name,enemy:false,dead:!p.alive})),{id:'boss',label:'BOSS',enemy:true,dead:false}];const current=t.turn;const size=sequence.length;return `<div class="turntimeline">${[-2,-1,0,1,2].map(offset=>{const p=sequence[((current+offset)%size+size)%size];return `<div class="turnnode ${offset<0?'previous':''} ${offset===0?'now':''} ${p.enemy?'foe':''} ${p.dead?'dead':''}" style="--distance:${Math.abs(offset)}"><span class="turnavatar">${p.enemy?'🦗':'♟'}</span><span class="turnname">${esc(p.label)}</span></div>`}).join('')}</div><div class="center tiny" style="margin-bottom:12px">${esc(actor().name)} · TURNO ATUAL</div>`};
+const hp=(n,max,enemy=false)=>`<div class="line small"><span>${enemy?'BOSS HP':'VIDA'}</span><b>${n} / ${max} HP</b></div><div class="hp ${enemy?'enemy':''}"><i style="width:${max?Math.max(0,100*n/max):0}%"></i></div>`;
+const header=(right='V0.5')=>`<div class="top"><span><span class="logo">BBB<span style="color:white">.</span></span><span style="display:block;font-size:9px;letter-spacing:1px;margin-top:4px">BIG BOSS BATTLE</span></span><span class="badge">${right}</span></div>`;
+const foot=(where)=>`<nav class="nav"><button class="${where==='home'?'active':''}" onclick="goto('home')"><span>⌂</span>INÍCIO</button><button class="${where==='character'?'active':''}" onclick="goto('characters')"><span>♟</span>PERSONAGEM</button><button class="${where==='fight'?'active':''}" onclick="goto('fight')"><span>⚔</span>FIGHT</button></nav>`;
+// Artwork extracted from the user's two Illustrator artboards, in 390 × 844 coordinates.
+const artImage=(asset,x,y,w,h,alt='')=>`<img class="menu-art" src="assets/${asset}.webp" alt="${alt}" draggable="false" style="left:${100*x/390}%;top:${100*y/844}%;width:${100*w/390}%;height:${100*h/844}%">`;
+const artButton=(asset,label,target,x,y,w,h,action=null)=>`<div class="art-control" style="left:${100*x/390}%;top:${100*y/844}%;width:${100*w/390}%;height:${100*h/844}%"><img src="assets/${asset}.webp" alt="" draggable="false"><button class="art-hit" aria-label="${label}" onclick="${action||`goto('${target}',this)`}"></button></div>`;
+const artBack=()=>artButton('back-button','VOLTAR',null,5.1081842,68.0792529,71.8510094,54.7823601,'goBack()').replace('art-control','art-control back-control');
+const artText=(text,x,baseline,size=24,weight=400,maxWidth=null)=>{const value=String(text);const font=maxWidth?Math.min(size,maxWidth/Math.max(1,value.length*.65)):size;return `<svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><text x="${x}" y="${baseline}" font-size="${font}" font-weight="${weight}">${esc(value)}</text></svg>`};
+const artScene=content=>`<div class="art-screen">${content}</div>`;
+const portrait=(p,x,y,w,h,editable=false)=>{
+ const innerX=x+w*.17,innerY=y+h*.18,innerW=w*.66,innerH=h*.64;
+ const photo=p.photo?`<img class="portrait-photo" src="${p.photo}" alt="Fotografia de ${esc(p.name)}" style="left:${100*innerX/390}%;top:${100*innerY/844}%;width:${100*innerW/390}%;height:${100*innerH/844}%">`:'';
+ return photo+artImage('portrait-frame',x,y,w,h)+(editable?`<label class="portrait-upload" style="left:${100*innerX/390}%;top:${100*innerY/844}%;width:${100*innerW/390}%;height:${100*innerH/844}%"><span aria-hidden="true" class="portrait-plus ${p.photo?'has-photo':''}">+</span><input type="file" accept="image/*" aria-label="Escolher fotografia de perfil" onchange="updateProfilePhoto(this)"></label>`:'');
+};
+function characterRows(selecting=false){
+ let content=artBack();
+ state.characters.forEach((p,i)=>{
+  const dy=i===2?364.47229:i*181.99292;
+  content+=portrait(p,19.9854958,151.969203+dy,125.828081,132.430173);
+  content+=artText(p.name,164.7256,199.6045+dy,23.8325,700,195)+artText('NÍVEL '+p.level,164.7256,221.8462+dy,15.6052)+artText(p.maxHp+' HP',163.9033,256.3379+dy,18.4664,700);
+  content+=`<button class="character-row-hit" aria-label="${selecting?'Escolher ':''}${esc(p.name)} · Nível ${p.level} · ${p.maxHp} HP" style="top:${100*(151.969203+dy)/844}%" onclick="${selecting?`selectBattleCharacter('${p.id}')`:`choosePrimary('${p.id}')`}"></button>`;
+  if(i<state.characters.length-1)content+=artImage('separator',17.4883207,296.532558+dy,355.023129,22.2945067);
+ });
+ return artScene(content);
+}
+function welcome(){return `<div class="art-screen" aria-label="BBB — Big Boss Battle">${artImage('bbb-logo',38.8475515,131.001315,312.305017,312.305017,'BBB — Big Boss Battle')}${artButton('fight-button','FIGHT','home',68.3177022,463.107255,253.364525,147.795973)}</div>`}
+function home(){return `<div class="art-screen" aria-label="Menu BBB — Big Boss Battle">${artImage('bbb-logo',85.7353027,117.800631,218.529376,218.529376,'BBB — Big Boss Battle')}${artButton('boss-fight-button','BOSS FIGHT','fightMode',62.533063,361.607094,264.933815,159.201765)}${artButton('character-button','CHARACTER','characters',87.8977082,515.224112,214.204376,128.020584)}</div>`}
+function characters(){return characterRows()}
+function character(){
+ const p=state.characters.find(x=>x.id===state.primary)||state.characters[0];
+ let content=artBack()+portrait(p,19.9854395,102.730647,155.428765,163.583977,true);
+ content+=artText('NÍVEL '+p.level,191.0391,201.8247,15.6052);
+ content+=`<input class="profile-name-input" aria-label="Nome da personagem" value="${esc(p.name)}" maxlength="32" autocomplete="off" enterkeyhint="done" onfocus="this.select()" onblur="updateCharacterName(this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" style="font-size:${Math.min(23.8325,180/Math.max(1,p.name.length*.65))}px">`;
+ content+=artText(p.maxHp+' HP',63,288,23.8325,700)+artImage('separator',17.4883207,332.687709,355.023129,22.2945067);
+ content+=`<svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><text x="195" y="388.1875" text-anchor="middle" font-size="23.8325">SKILL POINTS</text><text x="195" y="431.1152" text-anchor="middle" font-size="40.1703" font-weight="700">${p.points}</text></svg>`;
+ const cards=[['attack',34.4194233,52.3364585],['defense',143.20812,161.12147],['heal',254.182241,272.099236]];
+ cards.forEach(([skill,x,separatorX])=>{
+  content+=artImage('skill-card',x,451.85262,103.583638,228.712081)+artImage('separator',separatorX,570.124956,67.7497015,4.2545008);
+  content+=`<svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><text x="${x+51.79}" y="618.9082" text-anchor="middle" font-size="40.1703" font-weight="700">${p[skill]}</text></svg>`;
+  content+=`<button class="skill-upgrade" aria-label="Aumentar ${skill==='attack'?'Ataque':skill==='defense'?'Defesa':'Cura'}" onclick="spend('${skill}')" ${p.points===0?'disabled':''} style="left:${100*(x+10)/390}%">+1</button>`;
+ });
+ content+=artImage('defense-icon',151.483129,474.009531,87.033726,87.033726)+artImage('heal-icon',260.697758,472.249473,90.5538987,90.5538987);
+ content+=`<svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><image href="assets/attack-icon.webp" width="1" height="1" transform="matrix(95.7411385 36.7105652 -36.7105652 95.7411385 56.6960039 454.9535355)"/></svg>`;
+ return artScene(content);
+}
+function fight(){return `${header('CAMPANHA')}<button class="back" onclick="goBack()">← VOLTAR</button><div class="tiny">ESCOLHER DUNGEON</div><h1 class="heading">Encontra o teu<br>próximo Boss.</h1><div class="hero"><div><span class="badge">DUNGEON 01</span><h2>King Mantis</h2><span class="small muted">O primeiro teste da tua coragem.</span></div><div class="beast">🦗</div><span class="pill" style="width:max-content">50 HP BASE</span></div><button class="bigbtn" onclick="goto('party')">ESCOLHER ESTE BOSS →</button><div class="panel center muted small">🔒 Bosses 02–10 · Em desenvolvimento</div>${foot('fight')}`}
+function fightMode(){return artScene(artBack()+artButton('multiplayer-button','MULTIPLAYER',null,67.4080367,236.228985,255.184021,170.122681,"selectFightMode('multiplayer',this)")+artButton('singleplayer-button','SINGLEPLAYER',null,67.4080367,428.89671,255.184021,170.122681,"selectFightMode('local',this)"))}
+function battleCharacters(){return characterRows(true)}
+function battleOption(label,value,kind,x,y){
+ const selected=state[kind]===value;
+ return `<button class="battle-option ${selected?'selected':''}" aria-label="${label}" aria-pressed="${selected}" style="left:${100*x/390}%;top:${100*y/844}%" onclick="${kind==='mode'?'setMode':'setController'}('${value}')"><svg viewBox="0 0 105.393039 36.851762" preserveAspectRatio="none"><image href="assets/option-frame.webp" preserveAspectRatio="none" width="36.851762" height="105.393039" transform="translate(105.393039 0) rotate(90)"/><text x="52.6965" y="25.33" text-anchor="middle" font-family="Cinzel,serif" font-size="19" font-weight="700" fill="white">${label}</text></svg></button>`;
+}
+function party(){
+ const multiplayer=state.playMode==='multiplayer';
+ const selected=state.characters.find(p=>p.id===state.multiplayerCharacter)||state.characters.find(p=>p.id===state.primary)||state.characters[0];
+ const players=multiplayer?[selected]:state.characters;
+ let content=artBack();
+ content+=`<svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><defs><clipPath id="boss-art-clip"><path d="M47.27 135.242 L44.63 137.606 L32.199 148.112 L32.254 250.197 L48.811 264.058 L162.941 264.442 L341.535 264.278 L358.31 250.417 L358.366 203.005 L358.255 147.672 L342.03 133.922 L48.535 133.812 Z"/></clipPath></defs><image href="assets/boss-frame.webp" preserveAspectRatio="none" width="1" height="1" transform="matrix(0 161.721466 -357.080083 0 373.5402038 118.249554)"/><image href="assets/king-mantis.webp" x="27.8454145" y="129.258977" width="342.235342" height="192.405037" clip-path="url(#boss-art-clip)"/><text x="195" y="294.5225" text-anchor="middle" font-size="16.5772" font-weight="700">BOSS 01 - KING MANTIS</text><text x="195" y="351.3018" text-anchor="middle" font-size="20.2993" font-weight="700">${multiplayer?'A TUA PERSONAGEM':'REÚNE A TUA PARTY'}</text><text x="195" y="550.508" text-anchor="middle" font-size="20.2993" font-weight="700">TIPO DE BARALHO</text><text x="195" y="647.0508" text-anchor="middle" font-size="17" font-weight="700">JOGADOR CONTROLA O BOSS</text></svg>`;
+ content+=artImage('separator',19.6527494,304.488979,355.023129,22.2945067)+artImage('separator',19.6527494,505.439052,355.023129,22.2945067)+artImage('separator',19.6527494,601.858608,355.023129,22.2945067);
+ players.forEach((p,i)=>{
+  const x=multiplayer?149.179338:[28.6723804,149.179338,268.645037][i],picked=multiplayer||state.chosen.includes(p.id);
+  content+=`<div class="party-slot ${picked?'selected':''}" style="left:${100*x/390}%;top:${100*367.886429/844}%;"><button class="party-slot-hit" aria-label="${multiplayer?'Trocar personagem':p.name}" aria-pressed="${picked}" onclick="${multiplayer?"goto('battleCharacters',this)":`pick('${p.id}')`}"></button></div>`;
+  content+=portrait(p,x,367.886429,91.6413618,96.4497044);
+  content+=`<svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><text x="${x+45.82}" y="476.0977" text-anchor="middle" font-size="${Math.min(12.6672,104/Math.max(1,p.name.length*.65))}" font-weight="700">${esc(p.name)}</text><text x="${x+45.82}" y="486.0127" text-anchor="middle" font-size="7.5497">NVL ${p.level}</text>${picked?`<text x="${x+45.82}" y="459" text-anchor="middle" font-size="21" font-family="Arial,sans-serif" font-weight="700" fill="#ffd184" stroke="#080605" stroke-width="3" paint-order="stroke">✓</text>`:''}</svg>`;
+ });
+ content+=battleOption('FÍSICO','physical','mode',78.1432253,560.422992)+battleOption('DIGITAL','digital','mode',205.793799,560.422992)+battleOption('SIM','human','controller',78.1432253,656.84273)+battleOption('NÃO','game','controller',205.793799,656.84273);
+ let fight=artButton('fight-button','FIGHT',null,138.653375,714.3262685,117.021812,68.2627239,'begin()');
+ if(multiplayer){fight=fight.replace('class="art-hit"','class="art-hit" disabled');content+=`<svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><text x="195" y="785" text-anchor="middle" font-size="8" fill="#edbd80">MULTIPLAYER EM PREPARAÇÃO</text></svg>`}
+ content+=fight;
+ return artScene(content);
+}
+function history(){const p=state.characters.find(x=>x.id===state.primary);return `${header('HISTÓRICO')}<button class="back" onclick="goBack()">← VOLTAR</button><h1 class="heading">Últimas batalhas.</h1>${p.lastBattles.length?p.lastBattles.map(x=>`<div class="tile"><div class="avatar">${x.result==='Vitória'?'🏆':'☠'}</div><div class="detail"><b>${esc(x.result)} · ${esc(x.boss)}</b><div class="muted small">${esc(x.date)}</div></div></div>`).join(''):'<div class="panel muted small">Ainda não há batalhas para esta personagem.</div>'}${foot('home')}`}
+let combatDialog=null;
+const combatPos=(x,y,w,h)=>`left:${100*x/390}%;top:${100*y/844}%;width:${100*w/390}%;height:${100*h/844}%;`;
+function combatTimeline(){
+ const t=b(),sequence=[...live(),{id:'boss',name:'King Mantis',photo:'assets/king-mantis.webp'}],current=sequence.findIndex(p=>p.id===actor().id);
+ const past=t.completedTurns||[],centres=[37,82,128,195,261,308,353];
+ return [-3,-2,-1,0,1,2,3].map((offset,i)=>{
+ const id=offset<0?past[past.length+offset]:sequence[(Math.max(0,current)+offset)%sequence.length].id;
+ const p=id==='boss'?sequence.at(-1):t.players.find(p=>p.id===id);if(!p)return '';
+ const w=offset===0?73.71:46,h=w*1.0525,x=centres[i]-w/2,y=offset===0?50.67:66;
+ const photo=p.photo?`<img class="portrait-photo" src="${p.photo}" alt="${esc(p.name)}" style="${combatPos(x+w*.17,y+h*.18,w*.66,h*.64)}">`:`<span class="combat-initial" style="${combatPos(x+w*.17,y+h*.18,w*.66,h*.64)}">${esc(p.name.slice(0,2))}</span>`;
+ return `<div class="combat-turn ${offset<0?'past':''}" aria-label="${offset===0?'Turno atual':offset<0?'Turno anterior':'Próximo turno'}: ${esc(p.name)}">${photo}${artImage('portrait-frame',x,y,w,h)}</div>`;
+ }).join('');
+}
+function combatHp(id,p,x,y,w,h,enemy=false){const percent=Math.max(0,Math.min(100,100*p.hp/p.maxHp));return `<div class="combat-hp ${enemy?'enemy':''}" style="${combatPos(x,y,w,h)}" role="progressbar" aria-label="Vida de ${esc(enemy?'King Mantis':p.name)}" aria-valuemin="0" aria-valuemax="${p.maxHp}" aria-valuenow="${p.hp}"><img src="assets/${enemy?'boss':'player'}-hp-frame.webp" alt=""><div class="combat-hp-track"><div class="combat-hp-fill" data-hp-id="${id}" data-percent="${percent}" style="width:${percent}%"></div></div>${enemy?'':`<span class="combat-hp-value">${p.hp} / ${p.maxHp} HP</span>`}</div>`}
+function historyMarkup(value){
+ const names=[...new Set(['King Mantis',...b().players.map(p=>p.name)])].sort((a,b)=>b.length-a.length);let out='',i=0;
+ while(i<value.length){const name=names.find(n=>value.startsWith(n,i));if(name){out+=`<strong>${esc(name)}</strong>`;i+=name.length}else{out+=esc(value[i]);i++}}return out;
+}
+function combatDraw(){if(!b()||b().phase!=='draw'||cardBusy)return;if(actor().id==='boss'&&b().controller==='game')return;if(b().mode==='physical'){combatDialog='cards';render()}else drawCard()}
+function combatAttack(){if(!b())return;if(b().phase==='action')playerAction('attack');else if(b().phase==='bossAction'&&b().controller==='human'){combatDialog='attack';render()}}
+function combatHeal(){if(b()?.phase==='action'){combatDialog='heal';render()}}
+function closeCombatDialog(){combatDialog=null;render()}
+function chooseCombatCard(v){combatDialog=null;drawCard(v)}
+function chooseCombatTarget(id){const action=combatDialog;combatDialog=null;b().target=id;if(action==='heal')playerAction('heal');else if(action==='attack')bossStrike()}
+function battleScreen(){
+ const t=b(),a=actor(),isBoss=a.id==='boss',e=calc();
+ let content=combatTimeline()+artImage('separator',19.653,142.936,355.023,22.295)+artImage('separator',19.653,341.992,355.023,22.295);
+ content+=`<svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><defs><clipPath id="combat-boss-clip"><rect x="32" y="201" width="326" height="85" rx="3"/></clipPath></defs><image href="assets/boss-frame.webp" preserveAspectRatio="none" width="1" height="1" transform="matrix(0 103.677473 -357.080083 0 373.540448 192.465189)"/><image href="assets/king-mantis.webp" x="27.845" y="199.294" width="342.235" height="192.405" clip-path="url(#combat-boss-clip)"/><text x="195" y="135.57" text-anchor="middle" font-size="8" font-weight="700">${esc(a.name)}</text><text x="195" y="145" text-anchor="middle" font-size="5.5" fill="#d4af75">RONDA ${t.round} · TURNO ATUAL</text><text x="195" y="183.9" text-anchor="middle" font-size="20.08" font-weight="700">KING MANTIS</text><text x="195" y="338.37" text-anchor="middle" font-size="14.13" font-weight="700">${t.boss.hp} / ${t.boss.maxHp} HP</text></svg>`;
+ content+=combatHp('boss',t.boss,16.133,298.105,357.733,29.399,true);
+ t.players.forEach((p,i)=>{const y=[382.686,419.843,456.312][i];content+=artText(p.name,35.8,y-1.46,12.75,700,250)+artText('NVL '+p.level,320.494,y-2.91,10.9)+combatHp(p.id,p,15.693,y,357.733,18.958)});
+ const auto=isBoss&&t.controller==='game',canDraw=t.phase==='draw'&&!auto&&!cardBusy,canAttack=t.phase==='action'||t.phase==='bossAction'&&!auto;
+ content+=`<button class="combat-position combat-deck deck-source" aria-label="${t.mode==='physical'?'Introduzir carta física':'Comprar carta'}" onclick="combatDraw()" ${canDraw?'':'disabled'}>${cardHTML(null,true)}</button><div class="combat-position combat-reveal" id="reveal-slot">${t.chain.length?cardHTML(t.chain.at(-1)):''}</div><div class="combat-position combat-chain">${t.chain.length?`<span>${t.chain.map(c=>esc(c.v)).join(' + ')}</span><span>${t.phase==='draw'?'':e.base+' BASE'}</span>`:''}</div>`;
+ let attack=artButton('attack-button','ATTACK',null,71.263,613.872,132.74,74.706,'combatAttack()'),heal=artButton('heal-button','HEAL',null,181.593,613.023,138.349,77.862,'combatHeal()');
+ if(!canAttack)attack=attack.replace('class="art-hit"','class="art-hit" disabled');if(t.phase!=='action')heal=heal.replace('class="art-hit"','class="art-hit" disabled');content+=attack+heal;
+ const status=t.outcome?'Batalha terminada':cardBusy?'A revelar carta…':t.phase==='revive'?'A aguardar o D20…':auto?bossStatus||'O King Mantis prepara o turno…':t.phase==='draw'?(t.chain.length?'Carta especial: retira outra carta.':t.mode==='physical'?'Toca no baralho para introduzir a carta.':'Toca no baralho para comprar uma carta.'):`${isBoss?'Dano: '+e.base:'Ataque: '+(e.base+e.k*2+a.attack)+' · Cura: '+(e.base+e.q*2+a.heal)}${e.j?' · Defesa temporária: +'+e.j*2:''}`;
+ content+=`<div class="combat-position combat-status" role="status">${esc(status)}</div><div class="combat-position combat-history" aria-label="Histórico de batalha" aria-live="polite"><span class="history-label">HISTÓRICO DE BATALHA</span>${t.history.slice(0,3).map(x=>`<div>${historyMarkup(x)}</div>`).join('')}</div><button class="combat-position combat-forfeit" aria-label="FORFEIT" onclick="exitBattle()"><svg viewBox="0 0 105.393 36.852" preserveAspectRatio="none"><image href="assets/option-frame.webp" preserveAspectRatio="none" width="36.852" height="105.393" transform="translate(105.393 0) rotate(90)"/><text x="52.697" y="25.33" text-anchor="middle" font-family="Cinzel,serif" font-size="19" font-weight="700" fill="white">FORFEIT</text></svg></button>`;
+ return artScene(content);
+}
+function combatOverlay(){
+ const t=b();if(!t)return '';
+ let content='';
+ if(t.outcome)content=`<h2>${t.outcome==='victory'?'DUNGEON CONCLUÍDA!':'PARTY DERROTADA'}</h2><p class="small">${t.outcome==='victory'?'Toda a party vence. A primeira vitória de cada personagem dá +1 nível, +1 HP e +1 skill point.':'Todos os jogadores morreram. Podes tentar outra vez.'}</p><button class="bigbtn" onclick="exitBattle()">VOLTAR AO MENU</button>`;
+ else if(combatDialog==='cards'&&t.phase==='draw'){const values=[...'23456789','10','A',...(actor().id==='boss'?[]:['J','Q','K']),'JOKER'];content=`<h2>CARTA FÍSICA</h2><p class="small">Escolhe a carta que retiraste.</p><div class="rowwrap">${values.map(v=>`<button class="smallbtn" onclick="chooseCombatCard('${v}')">${v}</button>`).join('')}</div>`}
+ else if(combatDialog==='heal'&&t.phase==='action'||combatDialog==='attack'&&t.phase==='bossAction')content=`<h2>${combatDialog==='heal'?'QUEM QUERES CURAR?':'QUEM VAI SER ATACADO?'}</h2>${live().map(p=>`<button class="tile" onclick="chooseCombatTarget('${p.id}')"><strong>${esc(p.name)}</strong><span>${p.hp} / ${p.maxHp} HP</span></button>`).join('')}`;
+ if(!content)return '';return `<div class="modalshade"><div class="modal combat-modal">${content}${t.outcome?'':'<button class="bigbtn" onclick="closeCombatDialog()">CANCELAR</button>'}</div></div>`;
+}
+function modal(){const overlay=combatOverlay();if(overlay)return overlay;const t=b();if(!t||t.phase!=='revive'||!t.pending)return '';const p=t.players.find(p=>p.id===t.pending.id);const result=revivalRoll!==null,ok=result&&revivalRoll>t.pending.damage;return `<div class="modalshade"><div class="modal"><span class="tiny">ÚLTIMA CHANCE</span><h2>Se a sorte estiver contigo, este não será o fim</h2><p class="muted small">${esc(p.name)} caiu. Precisas de lançar mais de <b style="color:var(--gold)">${t.pending.damage}</b> num D20.</p><button class="die ${rolling?'rolling':''}" onclick="roll()" ${rolling||result?'disabled':''}><svg width="122" height="122" viewBox="0 0 120 120" aria-label="Dado de 20 faces"><polygon points="60,4 110,34 110,88 60,117 10,88 10,34" fill="#314862" stroke="#d3f07e" stroke-width="3"/><path d="M60 4 L60 91 L10 34 M60 91 L110 34 M10 88 L60 32 L110 88 M60 117 L60 91" fill="none" stroke="#92b8b5" stroke-width="2"/><text x="60" y="75" text-anchor="middle" font-size="32" font-weight="900" fill="#fff">20</text></svg></button>${result?`<div class="rollnumber">${revivalRoll}</div><h3>${ok?'RESSUSCITASTE!':'A SORTE NÃO CHEGOU'}</h3><p class="muted small">${ok?'Regressas à batalha com 1 HP.':'A personagem fica morta até ao fim da dungeon.'}</p><button class="bigbtn" onclick="closeRevive()">CONTINUAR BATALHA</button>`:`<p class="small muted">${rolling?'O dado está a girar…':'Toca no D20 para tentar ressuscitar.'}</p><button class="bigbtn" onclick="roll()" ${rolling?'disabled':''}>LANÇAR D20</button>`}<p class="small muted">Uma tentativa por dungeon.</p></div></div>`}
+
+function animateDraw(c){
+  const source=document.querySelector('.deck-source .playingcard'),slot=document.getElementById('reveal-slot');
+  if(!source||!slot)return;
+  const a=source.getBoundingClientRect(),z=slot.getBoundingClientRect();
+  const flying=document.createElement('div');flying.className='card-flight';
+  flying.style.cssText=`left:${a.left}px;top:${a.top}px;width:${a.width}px;height:${a.height}px;transform:translate(0px,0px) rotate(-7deg) scale(.94);transition:transform .66s cubic-bezier(.16,.8,.2,1)`;
+  flying.innerHTML='<div class="flip-inner">'+cardHTML(null,true)+cardHTML(c).replace('playingcard ','playingcard face ')+'</div>';
+  document.body.appendChild(flying);
+  const end=slot.querySelector('.playingcard');if(end)end.classList.add('draw-dim');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    flying.style.transform=`translate(${z.left-a.left}px,${z.top-a.top}px) rotate(0deg) scale(1)`;
+    setTimeout(()=>flying.classList.add('face-up'),290);
+  }));
+  setTimeout(()=>{flying.remove();if(end&&end.isConnected)end.classList.remove('draw-dim')},910);
+}
+function fitScreen(){
+ const screen=$('app');if(!screen)return;
+ const frame=document.querySelector('.device');
+ const gap=window.innerWidth>500?56:12;
+ const previewScale=Math.min(1,(window.innerWidth-12)/390,(window.innerHeight-gap)/844);
+ frame.style.setProperty('--preview-scale',String(Math.max(.1,previewScale)));
+ screen.style.zoom='1';
+ const available=document.querySelector('.device').clientHeight;
+ const required=screen.scrollHeight;
+ if(required>available){
+   const scale=Math.max(.48,Math.min(1,(available-3)/required));
+   screen.style.zoom=String(scale);
+ }
+}
+const pageBackgrounds={}; // Add a screen-specific asset here only when its background changes.
+function initialiseBackground(){
+ const embers=$('ambient-embers');
+ if(!embers.children.length)embers.innerHTML=Array.from({length:28},(_,i)=>`<span class="ambient-ember" style="--x:${5+(i*37)%90}%;--size:${i%4===0?3:i%2===0?2:1}px;--duration:${10+i%7}s;--delay:-${i*1.7}s;--drift:${(i%2?1:-1)*(8+i*3)}px"></span>`).join('');
+ const background=$('ambient-background');const asset=pageBackgrounds[state.screen]||'menu-background';
+ if(background.dataset.asset!==asset){background.dataset.asset=asset;background.style.backgroundImage=`url('assets/${asset}.webp')`;background.style.setProperty('--fire-image',`url('assets/${asset}.webp')`)}
+}
+function render(){const previousHp=Object.fromEntries([...document.querySelectorAll('[data-hp-id]')].map(el=>[el.dataset.hpId,el.getBoundingClientRect().width/el.parentElement.getBoundingClientRect().width*100]));initialiseBackground();let content=state.screen==='fightMode'?fightMode():state.screen==='battleCharacters'?battleCharacters():state.screen==='welcome'?welcome():state.screen==='characters'?characters():state.screen==='home'?home():state.screen==='character'?character():state.screen==='fight'?fight():state.screen==='party'?party():state.screen==='history'?history():state.screen==='battle'&&b()?battleScreen():home();$('app').classList.toggle('art-layout',['welcome','home','fightMode','characters','character','battleCharacters','party','battle'].includes(state.screen));$('app').innerHTML=content;$('modalroot').innerHTML=modal();fitScreen();document.querySelectorAll('[data-hp-id]').forEach(el=>{const next=el.dataset.percent,old=previousHp[el.dataset.hpId];if(Number.isFinite(old)&&Math.abs(old-Number(next))>.01){el.style.width=old+'%';requestAnimationFrame(()=>requestAnimationFrame(()=>{if(el.isConnected)el.style.width=next+'%'}))}})}
+render();
+window.addEventListener('resize',fitScreen);
+</script></body></html>

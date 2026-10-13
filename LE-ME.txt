@@ -1,0 +1,11 @@
+BBB — Big Boss Battle | Site de teste atualizado
+
+Abre index.html num browser no computador. Para jogar em iPhone e Android, publica esta pasta (index.html + assets) num serviço de alojamento estático.
+
+Os recursos gráficos enviados estão em assets/ e foram integrados na interface. A fonte Cinzel é carregada localmente.
+
+A progressão é guardada no armazenamento do browser. Cada personagem começa com 25 HP e 0 skill points; ganhará +1 HP máximo e +1 skill point na primeira vitória contra o Boss.
+
+Multiplayer online ainda não está implementado. O menu MULTIPLAYER é uma pré-visualização, sem criação de salas online.
+
+Não movas o index.html isoladamente: precisa da pasta assets ao lado.
