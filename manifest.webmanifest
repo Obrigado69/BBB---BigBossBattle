@@ -1,0 +1,32 @@
+{
+  "id": "/BBB---BigBossBattle/",
+  "name": "BBB — Big Boss Battle",
+  "short_name": "BBB",
+  "description": "Big Boss Battle — aventuras e boss fights com amigos.",
+  "start_url": "/BBB---BigBossBattle/",
+  "scope": "/BBB---BigBossBattle/",
+  "display": "standalone",
+  "background_color": "#090908",
+  "theme_color": "#1a120d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/bbb-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/bbb-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/bbb-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
