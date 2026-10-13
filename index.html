@@ -1,4 +1,4 @@
-<!doctype html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>BBB — Big Boss Battle</title><style>
+<!doctype html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>BBB — Big Boss Battle</title><style>
 :root{color-scheme:dark;--bg:#0b1116;--pane:#151e27;--edge:#2b3945;--ink:#edf0e9;--muted:#9aa9b2;--acid:#d3f07e;--red:#fb796c;--gold:#f5cc79;font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#23362d,#0b1015 60%);color:var(--ink)}button,input{font:inherit}button{cursor:pointer;border:none}button:disabled{opacity:.35;cursor:default}.device{position:relative;max-width:420px;min-height:800px;margin:25px auto;background:#101820;border:1px solid #374751;border-radius:34px;overflow:hidden;box-shadow:0 30px 110px #000b}.screen{padding:25px 22px 105px;min-height:800px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.logo{font-weight:1000;letter-spacing:4px;color:var(--acid);font-size:13px}.tiny{font-size:10px;font-weight:850;letter-spacing:2.5px;text-transform:uppercase;color:var(--acid)}.muted{color:var(--muted)}.small{font-size:12px}.heading{font-size:34px;line-height:1.06;letter-spacing:-1.5px;margin:8px 0 12px;font-weight:900}.section{font-size:19px;margin:0 0 14px;letter-spacing:-.5px}.panel{background:var(--pane);border:1px solid var(--edge);padding:16px;border-radius:20px;margin:12px 0}.hero{position:relative;border-radius:24px;background:radial-gradient(circle at 66% 38%,#3d6245,#172922 55%,#132024);border:1px solid #416251;overflow:hidden;padding:22px;min-height:250px;display:flex;flex-direction:column;justify-content:space-between}.hero .beast{font-size:115px;position:absolute;right:-13px;bottom:-19px;filter:drop-shadow(0 15px 15px #080c0c);transform:rotate(-14deg)}.hero h2{font-size:28px;line-height:1.08;letter-spacing:-1px;max-width:200px;margin:9px 0}.hero>*:not(.beast){position:relative;z-index:1}.badge{display:inline-block;border:1px solid #77905d;color:var(--acid);border-radius:50px;padding:5px 9px;font-size:10px;font-weight:800;letter-spacing:1px}.bigbtn{width:100%;padding:17px;background:var(--acid);color:#142016;border-radius:14px;font-weight:900;letter-spacing:.4px;margin:8px 0}.secondary{background:#26343e;color:var(--ink)}.outline{border:1px solid #4a5b61;background:#1a252c;color:var(--ink)}.smallbtn{background:#28363f;border-radius:10px;color:#fff;padding:10px 12px;font-size:12px;font-weight:800}.back{border:0;background:none;color:var(--muted);padding:0 0 16px;font-weight:800}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.statbox{background:#202d33;border:1px solid #394850;border-radius:14px;text-align:center;padding:13px 4px}.statbox b{font-size:23px;display:block;margin:6px}.statbox span{font-size:11px;color:var(--muted)}.line{display:flex;align-items:center;justify-content:space-between;gap:10px}.sep{height:1px;background:var(--edge);margin:15px 0}.hp{height:9px;background:#35434c;border-radius:50px;overflow:hidden;margin:8px 0}.hp i{display:block;height:100%;background:var(--acid);border-radius:50px;transition:width .4s}.hp.enemy i{background:var(--red)}.tile{display:flex;align-items:center;justify-content:space-between;background:#1a2730;border:1px solid var(--edge);border-radius:15px;padding:14px;margin:9px 0;gap:9px}.tile.selected{border-color:var(--acid);background:#26372d}.tile.dead{opacity:.46}.tile .avatar{background:#35444c;width:39px;height:39px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;font-size:23px}.tile .detail{flex:1;min-width:0}.tile b{font-size:13px}.tick{width:23px;height:23px;border:1px solid #6b7a81;border-radius:7px;display:grid;place-items:center;color:#132017}.selected .tick{background:var(--acid)}.input{width:100%;background:#1c2a33;border:1px solid #40515a;color:#fff;border-radius:12px;padding:14px;margin:8px 0 12px}.nav{position:absolute;bottom:0;left:0;right:0;background:#111a22e8;border-top:1px solid #34434a;display:flex;justify-content:space-around;padding:13px 8px 20px}.nav button{background:transparent;color:#8c9aa4;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:800}.nav button.active{color:var(--acid)}.nav span{font-size:23px}.turntrack{display:flex;gap:6px;overflow:auto;padding-bottom:6px;scrollbar-width:none;margin-bottom:14px}.turnpill{flex-shrink:0;padding:8px 11px;background:#26333b;border:1px solid #3b4b53;border-radius:22px;color:#9eafb6;font-size:11px;font-weight:800}.turnpill.active{background:var(--acid);color:#19231a}.turnpill.dead{opacity:.3}.battleboss{text-align:center;background:radial-gradient(circle at center,#3c473a,#19222b 65%);border:1px solid #354740;padding:16px;border-radius:20px}.battleboss .beast{font-size:91px;line-height:1.1;filter:drop-shadow(0 12px 14px #000a)}.battleboss h2{margin:0;font-size:20px}.deckarea{display:flex;gap:18px;justify-content:center;align-items:center;margin:16px 0}.playingcard{height:126px;width:86px;flex-shrink:0;background:#f4f2e9;color:#26313a;border:3px solid #eee;border-radius:11px;box-shadow:0 8px 19px #0007;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:31px;font-weight:1000;transform-origin:center;animation:flip .45s ease}.playingcard.backcard{background:repeating-linear-gradient(45deg,#263d46 0 5px,#344d53 5px 10px);border:5px double var(--acid);color:var(--acid);font-size:32px}.playingcard.redsuit{color:#c84442}.playingcard.joker{font-size:18px;background:#e3c779}.playingcard small{font-size:27px}.deckclick{background:transparent;padding:0}.deckcaption{text-align:center;font-size:11px;color:var(--muted);margin-top:6px}.miniCards{display:flex;justify-content:center;gap:4px;flex-wrap:wrap}.minicard{padding:5px 7px;border-radius:6px;background:#f2eee3;color:#172028;font-weight:900;font-size:12px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.actions button{padding:15px 9px;background:#263640;color:#fff;border:1px solid #50616a;border-radius:14px;font-weight:800}.actions button:first-child{background:#392e2b;border-color:#76504d}.actions button:last-child{background:#283d31;border-color:#4c7b5b}.result{padding:12px;border-radius:14px;background:#2b3e33;color:#d4f4cd;text-align:center}.log{font-size:12px;max-height:125px;overflow:auto;color:#adbcc1}.log div{border-bottom:1px solid #33414c;padding:8px 0}.modalshade{position:absolute;inset:0;z-index:10;background:#030709d9;display:flex;align-items:center;justify-content:center;padding:24px}.modal{background:linear-gradient(#273044,#141e29);border:1px solid #596477;width:100%;border-radius:25px;padding:25px;text-align:center;box-shadow:0 20px 70px #000}.modal h2{font-size:25px;line-height:1.13}.die{margin:22px auto;border:0;background:transparent;display:block;font-size:104px;line-height:1;filter:drop-shadow(0 6px 15px #000)}.die.rolling{animation:spin .65s ease-in-out infinite}.rollnumber{font-size:60px;color:var(--acid);font-weight:1000}.pill{background:#263b33;color:var(--acid);padding:5px 9px;border-radius:50px;font-size:11px;font-weight:850}.rowwrap{display:flex;gap:7px;flex-wrap:wrap}.rowwrap button{min-width:41px}.center{text-align:center}.spaced{margin-top:18px}.hidden{display:none}@keyframes flip{from{transform:rotateY(90deg) scale(.8);opacity:.4}to{transform:rotateY(0) scale(1);opacity:1}}@keyframes spin{0%{transform:rotate(0) scale(.85)}50%{transform:rotate(180deg) scale(1.15)}100%{transform:rotate(360deg) scale(.85)}}@media(max-width:500px){body{background:#101820}.device{width:100%;min-height:100dvh;margin:0;border:0;border-radius:0;box-shadow:none}.screen{min-height:100dvh;padding-top:28px}}@media(min-width:501px){body:before{content:'PRÉ-VISUALIZAÇÃO MOBILE · 390 PX';display:block;text-align:center;color:#84958e;letter-spacing:3px;font-size:10px;font-weight:800;padding-top:18px}}
 
 /* v0.3 mobile polish */
@@ -141,12 +141,22 @@ body:before{content:'BBB · PRÉ-VISUALIZAÇÃO MOBILE · 390 × 844';position:f
 .dungeon-code-input{position:absolute;left:27.5%;top:61.3%;width:45%;height:6.5%;border:0;border-radius:4px;padding:0;background:transparent;color:white;font:700 33.1278px Cinzel,Georgia,serif;text-align:center;letter-spacing:1px;outline:none;caret-color:#ffd184;z-index:2}.dungeon-code-input::placeholder{color:#c7b695;opacity:.5}.dungeon-code-input:focus{box-shadow:inset 0 -1px #ffd184}.dungeon-code-status{position:absolute;left:12%;top:69%;width:76%;height:2.5%;display:grid;place-items:center;font:10px Cinzel,serif;text-align:center;color:#f4cf9f;pointer-events:none}
 
 .lobby-seat{position:absolute;background:transparent;border:1px solid transparent;border-radius:4px;z-index:2;padding:0}.lobby-seat.selected{outline:1px solid #ffd077;outline-offset:3px;box-shadow:0 0 8px #ff9c3577;background:#ffd07708}.lobby-seat:focus-visible{outline:2px solid #ffd077}.lobby-status{position:absolute;left:10%;top:93%;width:80%;height:2%;color:#f1cc95;text-align:center;font:8px Cinzel,serif;pointer-events:none}
-.multiplayer-tools{position:fixed;bottom:10px;left:10px;z-index:100;width:220px;font:12px system-ui,sans-serif;background:#121b18f2;border:1px solid #637362;border-radius:8px;color:#e8eddf;padding:10px;box-shadow:0 5px 25px #0008}.multiplayer-tools summary{cursor:pointer;font-weight:700}.multiplayer-tools p{font-size:11px;color:#b8c5b8;line-height:1.4}.multiplayer-tools label{display:flex;gap:6px;align-items:center;justify-content:space-between;margin:8px 0}.multiplayer-tools select{max-width:135px;background:#27332c;color:white;border:1px solid #637362;border-radius:4px;padding:4px;font-size:11px}
 
 .multiplayer-ally{position:absolute;inset:0;pointer-events:none}.multiplayer-ally.fallen{opacity:1}
 
 .portrait-dead-mask{position:absolute;border-radius:50%;background:#000b;pointer-events:none}
-</style><link rel="manifest" href="./manifest.webmanifest"><meta name="theme-color" content="#1a120d"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="BBB"><link rel="apple-touch-icon" href="./icons/bbb-180.png"><link rel="icon" type="image/png" href="./icons/bbb-192.png"></head><body><div class="device"><div id="ambient-background" class="ambient-background" aria-hidden="true"><svg class="fire-filter-defs" aria-hidden="true"><defs><filter id="bbb-fire-ripple" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency=".015 .035" numOctaves="2" seed="7" result="heat"><animate attributeName="baseFrequency" values=".015 .035;.018 .042;.015 .035" dur="9s" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" in2="heat" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg><div class="ambient-fire"></div><div class="ambient-light"></div><div id="ambient-embers"></div></div><div id="app" class="screen"></div><div id="modalroot"></div></div><aside id="multiplayer-preview-tools"></aside><script>
+#navigation-layer{position:absolute;inset:0;z-index:1;pointer-events:none}#navigation-layer .art-hit{pointer-events:auto}.device.navigating #navigation-layer .art-hit{pointer-events:none}
+/* Mobile fills the available screen; desktop retains a phone preview. */
+@media(max-width:600px),(hover:none) and (pointer:coarse){
+ body:before{display:none}
+ .device{position:fixed;inset:0;left:0;top:0;width:100%;height:100dvh;margin:0;border:0;border-radius:0;box-shadow:none;transform:none}
+ .screen.art-layout,#modalroot,#navigation-layer{inset:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);width:auto;height:auto}
+}
+
+/* BBB account-first-use layer: does not alter game art */
+.account-gate{position:fixed;inset:0;z-index:9900;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(5,4,3,.90);font-family:Cinzel,Georgia,serif}
+.account-gate.open{display:flex}.account-panel{width:min(100%,360px);color:#f5e5bf;border:1px solid #b68a42;border-radius:14px;background:linear-gradient(145deg,#302114,#100c08);padding:28px 22px;text-align:center;box-shadow:0 12px 50px #000a}.account-panel h2{margin:0 0 12px;color:#f4c878;font-size:25px}.account-panel p{font:13px/1.65 Arial,sans-serif;color:#e3d5bd}.account-panel input{display:block;width:100%;padding:13px;margin:20px 0 12px;border:1px solid #b68a42;border-radius:7px;background:#15110c;color:white;font:18px Cinzel,serif;text-align:center}.account-panel button{width:100%;padding:13px;background:linear-gradient(#986a2b,#593919);border:1px solid #d2a45e;border-radius:7px;color:#fff3d6;font:700 17px Cinzel,serif}.account-panel .account-error{min-height:17px;color:#ffa5a5;font:12px Arial,sans-serif}
+</style><link rel="manifest" href="./manifest.webmanifest"><meta name="theme-color" content="#130c08"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="./icons/bbb-180.png"></head><body><div class="device"><div id="ambient-background" class="ambient-background" aria-hidden="true"><svg class="fire-filter-defs" aria-hidden="true"><defs><filter id="bbb-fire-ripple" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency=".015 .035" numOctaves="2" seed="7" result="heat"><animate attributeName="baseFrequency" values=".015 .035;.018 .042;.015 .035" dur="9s" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" in2="heat" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg><div class="ambient-fire"></div><div class="ambient-light"></div><div id="ambient-embers"></div></div><div id="app" class="screen"></div><div id="navigation-layer"></div><div id="modalroot"></div></div><div id="bbb-account-gate" class="account-gate" role="dialog" aria-modal="true" aria-labelledby="bbb-account-heading"><div class="account-panel"><h2 id="bbb-account-heading">NOME DE CONTA</h2><p>Introduz o nome que queres associar à tua conta BBB. Este nome é independente das personagens.</p><form id="bbb-account-form"><input id="bbb-account-input" maxlength="32" autocomplete="nickname" placeholder="Nome de conta" required><div class="account-error" id="bbb-account-error"></div><button type="submit">CONTINUAR</button></form></div></div><script>
 const MAX_PARTY=3;
 // Add future bosses here; behavior/skills are data slots for the next mechanics pass.
 const BOSS_CATALOG=[
@@ -159,18 +169,20 @@ const bossName=()=>battleBoss().name;
 const bossImage=()=>'assets/'+battleBoss().art+'.webp';
 const storeKey='mantis_mobile_preview_v2';
 const fresh=(id,name)=>({id,name,level:1,maxHp:25,attack:0,defense:0,heal:0,points:0,defeated:[],lastBattles:[]});
-let state;try{state=JSON.parse(localStorage.getItem(storeKey))}catch{}if(!state||!Array.isArray(state.characters))state={characters:[fresh('p1','Aventureiro')],primary:'p1',screen:'home',mode:'digital',controller:'game',chosen:['p1']};
+const RESET_VERSION='fresh-start-2026-10-13';
+let state;try{state=JSON.parse(localStorage.getItem(storeKey))}catch{}
+if(!state||state.resetVersion!==RESET_VERSION||!Array.isArray(state.characters))state={resetVersion:RESET_VERSION,characters:[],primary:null,screen:'welcome',mode:'digital',controller:'game',chosen:[],selectedBossId:BOSS_CATALOG[0].id};
 if(!BOSS_CATALOG.some(x=>x.id===state.selectedBossId))state.selectedBossId=BOSS_CATALOG[0].id;
 state.screen='welcome';state.battle=null;let revivalRoll=null,rolling=false,revealed=false,bossTimer=null,transitionLocked=false,cardBusy=false,bossStatus='',timelineIndex=0;
-const $=id=>document.getElementById(id),esc=v=>String(v).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[x]));
+const $=id=>document.getElementById(id),esc=v=>String(v).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
 const save=()=>{const {battle,...persistent}=state;localStorage.setItem(storeKey,JSON.stringify(persistent))};
-if(state.characters.length>MAX_PARTY){state.extraCharacters=[...(state.extraCharacters||[]),...state.characters.slice(MAX_PARTY)];state.characters=state.characters.slice(0,MAX_PARTY)}
-while(state.characters.length<MAX_PARTY){const slot=state.characters.length+1;state.characters.push(fresh('slot-'+slot,'Personagem '+slot))}
-state.characters.forEach(p=>{if(!p.bbbTestPointsGranted){p.points=(Number(p.points)||0)+4;p.bbbTestPointsGranted=true}});
-if(!state.characters.some(p=>p.id===state.primary))state.primary=state.characters[0].id;
-// One-time local test boost requested by the user.
-if(!state.bbbAttack55TestGranted){state.characters.find(p=>p.id===state.primary).attack=55;state.bbbAttack55TestGranted=true;}
-state.chosen=(state.chosen||[state.primary]).filter(id=>state.characters.some(p=>p.id===id));if(!state.chosen.length)state.chosen=[state.primary];save();
+state.characters=state.characters.slice(0,MAX_PARTY);
+if(!state.characters.some(p=>p.id===state.primary))state.primary=state.characters[0]?.id||null;
+state.chosen=(state.chosen||[]).filter(id=>state.characters.some(p=>p.id===id));if(!state.chosen.length&&state.primary)state.chosen=[state.primary];save();
+function createCharacterSlot(slot){
+ if(!Number.isInteger(slot)||slot<0||slot>=MAX_PARTY||state.characters[slot]||slot!==state.characters.length)return;
+ const p=fresh('slot-'+(slot+1),'Personagem '+(slot+1));state.characters.push(p);state.primary=p.id;if(!state.chosen.length)state.chosen=[p.id];save();goto('character');
+}
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const deck=(isBoss=false)=>shuffle([...['♠','♥','♦','♣'].flatMap(s=>[...'23456789', '10','A',...(isBoss?[]:['J','Q','K'])].map(v=>({v,s}))),{v:'JOKER',s:'★'},{v:'JOKER',s:'☆'}]);
 const b=()=>state.battle;const live=()=>b().players.filter(p=>p.alive);const actor=()=>b().turn<b().players.length?b().players[b().turn]:{id:'boss',name:bossName()};
@@ -186,7 +198,7 @@ async function changeScreen(target,back=false,trigger=document.activeElement){
  try{
   if(!reduced){
    const button=trigger?.closest?.('.art-control')||trigger?.closest?.('button');
-   const pulse=button?.animate([{transform:'scale(1)',easing:'cubic-bezier(.45,0,.55,1)'},{transform:'scale(1.025)',offset:.5,easing:'cubic-bezier(.45,0,.55,1)'},{transform:'scale(1)'}],{duration:520,easing:'linear'});
+   const pulse=button?.closest?.('#navigation-layer')?null:button?.animate([{transform:'scale(1)',easing:'cubic-bezier(.45,0,.55,1)'},{transform:'scale(1.025)',offset:.5,easing:'cubic-bezier(.45,0,.55,1)'},{transform:'scale(1)'}],{duration:520,easing:'linear'});
    const fade=screen.animate([{opacity:1},{opacity:0}],{duration:420,delay:pulse?180:0,easing:'cubic-bezier(.45,0,.55,1)',fill:'forwards'});
    await Promise.all([pulse?.finished,fade.finished]);
   }
@@ -204,9 +216,23 @@ async function changeScreen(target,back=false,trigger=document.activeElement){
   screen.removeAttribute('aria-busy');frame.classList.remove('navigating');transitionLocked=false;
  }
 }
-function goto(s,trigger){return changeScreen(s,false,trigger)}
+const BBB_ACCOUNT_KEY='bbb_account_name_v1';
+let bbbAccountName=localStorage.getItem(BBB_ACCOUNT_KEY)||'';
+function bbbEnterFight(trigger){
+ if(bbbAccountName)return changeScreen('fightMode',false,trigger);
+ const gate=document.getElementById('bbb-account-gate');gate.classList.add('open');
+ document.getElementById('bbb-account-input').focus();
+}
+document.getElementById('bbb-account-form').addEventListener('submit',event=>{
+ event.preventDefault();const name=document.getElementById('bbb-account-input').value.trim();
+ if(!name||name.length>32){document.getElementById('bbb-account-error').textContent='Introduz um nome válido.';return;}
+ bbbAccountName=name;localStorage.setItem(BBB_ACCOUNT_KEY,name);
+ document.getElementById('bbb-account-gate').classList.remove('open');
+ changeScreen('fightMode',false);
+});
+function goto(s,trigger){if(s==='fightMode')return bbbEnterFight(trigger);return changeScreen(s,false,trigger)}
 function goBack(){if(!screenHistory.length||transitionLocked)return;return changeScreen(screenHistory.at(-1),true)}
-function selectFightMode(mode,trigger){if(transitionLocked)return;state.playMode=mode;if(mode==='multiplayer'){goto('multiplayerEntry',trigger);return;}goto('party',trigger)}
+function selectFightMode(mode,trigger){if(transitionLocked)return;if(!state.characters.length){goto('characters',trigger);return;}state.playMode=mode;goto(mode==='multiplayer'?'multiplayerEntry':'party',trigger)}
 function selectBattleCharacter(id){if(!state.characters.some(p=>p.id===id))return;state.multiplayerCharacter=id;save();goBack()}
 function updateCharacterName(input){const p=state.characters.find(p=>p.id===state.primary);const value=input.value.trim();if(value)p.name=value;input.value=p.name;input.style.fontSize=Math.min(23.8325,180/Math.max(1,p.name.length*.65))+'px';save()}
 async function updateProfilePhoto(input){
@@ -242,7 +268,6 @@ function canActInBattle(){const t=b();return !!t&&!isDeadSpectator()&&(!t.multip
 function isDeadSpectator(){const t=b();return !!t?.multiplayer&&!t.outcome&&t.players.some(p=>p.id===t.viewerId&&!p.alive)&&!(t.phase==='revive'&&t.pending?.id===t.viewerId)}
 function canResolveRevive(){const t=b();return !!t&&(!t.multiplayer||t.pending?.id===t.viewerId)}
 function showBossHp(){return !b()?.multiplayer||b().viewerId===b().bossControllerId}
-function viewCurrentMultiplayerTurn(){if(!b()?.multiplayer)return;const id=actor().id==='boss'?b().bossControllerId:actor().id;if(id)setPreviewViewer(id)}
 const cardArtKey=v=>({'A':'a','Q':'q','J':'j','K':'k','JOKER':'joker'}[v]||String(v));
 function cardHTML(c,back=false){
  if(back)return '<div class="playingcard backcard"><img src="assets/card-back.webp" alt="Baralho" draggable="false"></div>';
@@ -315,17 +340,19 @@ const foot=(where)=>`<nav class="nav"><button class="${where==='home'?'active':'
 // Artwork extracted from the user's two Illustrator artboards, in 390 × 844 coordinates.
 const artImage=(asset,x,y,w,h,alt='')=>`<img class="menu-art" src="assets/${asset}.webp" alt="${alt}" draggable="false" style="left:${100*x/390}%;top:${100*y/844}%;width:${100*w/390}%;height:${100*h/844}%">`;
 const artButton=(asset,label,target,x,y,w,h,action=null)=>`<div class="art-control" style="left:${100*x/390}%;top:${100*y/844}%;width:${100*w/390}%;height:${100*h/844}%"><img src="assets/${asset}.webp" alt="" draggable="false"><button class="art-hit" aria-label="${label}" onclick="${action||`goto('${target}',this)`}"></button></div>`;
-const artBack=()=>artButton('back-button','VOLTAR',null,5.1081842,68.0792529,71.8510094,54.7823601,'goBack()').replace('art-control','art-control back-control');
+const artBack=()=>'';
+function renderNavigation(){const layer=$('navigation-layer');if(!layer)return;const visible=state.screen!=='welcome';layer.hidden=!visible;if(!layer.firstElementChild)layer.innerHTML=artButton('back-button','VOLTAR',null,5.1081842,68.0792529,71.8510094,54.7823601,"state.screen==='battle'?exitBattle():goBack()").replace('art-control','art-control back-control');}
 const artText=(text,x,baseline,size=24,weight=400,maxWidth=null)=>{const value=String(text);const font=maxWidth?Math.min(size,maxWidth/Math.max(1,value.length*.65)):size;return `<svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><text x="${x}" y="${baseline}" font-size="${font}" font-weight="${weight}">${esc(value)}</text></svg>`};
 const artScene=content=>`<div class="art-screen">${content}</div>`;
 const portrait=(p,x,y,w,h,editable=false)=>{
  const innerX=x+w*.17,innerY=y+h*.18,innerW=w*.66,innerH=h*.64;
  const photo=p.photo?`<img class="portrait-photo" src="${p.photo}" alt="Fotografia de ${esc(p.name)}" style="left:${100*innerX/390}%;top:${100*innerY/844}%;width:${100*innerW/390}%;height:${100*innerH/844}%">`:'';
- const dead=p.alive===false?`<div class="portrait-dead-mask" style="left:${100*innerX/390}%;top:${100*innerY/844}%;width:${100*innerW/390}%;height:${100*innerH/844}%"></div><svg class="art-text-layer" viewBox="0 0 390 844"><text x="${x+w/2}" y="${innerY+innerH*.57}" text-anchor="middle" font-size="${Math.max(5,w*.17)}" font-weight="700">DEAD</text></svg>`:'';
+ const dead=p.alive===false?`<div class="portrait-dead-mask" style="left:${100*innerX/390}%;top:${100*innerY/844}%;width:${100*innerW/390}%;height:${100*innerH/844}%"></div><svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><text x="${x+w/2}" y="${innerY+innerH*.57}" text-anchor="middle" font-size="${Math.max(5,w*.17)}" font-weight="700">DEAD</text></svg>`:'';
  return photo+artImage('portrait-frame',x,y,w,h)+dead+(editable?`<label class="portrait-upload" style="left:${100*innerX/390}%;top:${100*innerY/844}%;width:${100*innerW/390}%;height:${100*innerH/844}%"><span aria-hidden="true" class="portrait-plus ${p.photo?'has-photo':''}">+</span><input type="file" accept="image/*" aria-label="Escolher fotografia de perfil" onchange="updateProfilePhoto(this)"></label>`:'');
 };
 function characterRows(selecting=false){
  let content=artBack();
+ if(!selecting)for(let i=state.characters.length;i<MAX_PARTY;i++){const dy=i===2?364.47229:i*181.99292;content+=portrait({name:'Slot vazio'},19.9854958,151.969203+dy,125.828081,132.430173)+artText('+',72,232+dy,32,700)+artText('SLOT VAZIO',164.7256,199.6045+dy,19,700,195)+artText('Criar personagem',164.7256,230+dy,12);content+=`<button class="character-row-hit" aria-label="Criar personagem no slot ${i+1}" style="top:${100*(151.969203+dy)/844}%" onclick="createCharacterSlot(${i})" ${i!==state.characters.length?'disabled':''}></button>`;}
  state.characters.forEach((p,i)=>{
   const dy=i===2?364.47229:i*181.99292;
   content+=portrait(p,19.9854958,151.969203+dy,125.828081,132.430173);
@@ -339,6 +366,7 @@ function welcome(){return `<div class="art-screen" aria-label="BBB — Big Boss 
 function home(){return `<div class="art-screen" aria-label="Menu BBB — Big Boss Battle">${artImage('bbb-logo',85.7353027,117.800631,218.529376,218.529376,'BBB — Big Boss Battle')}${artButton('boss-fight-button','BOSS FIGHT','fightMode',62.533063,361.607094,264.933815,159.201765)}${artButton('character-button','CHARACTER','characters',87.8977082,515.224112,214.204376,128.020584)}</div>`}
 function characters(){return characterRows()}
 function character(){
+ if(!state.characters.length)return characters();
  const p=state.characters.find(x=>x.id===state.primary)||state.characters[0];
  let content=artBack()+portrait(p,19.9854395,102.730647,155.428765,163.583977,true);
  content+=artText('NÍVEL '+p.level,191.0391,201.8247,15.6052);
@@ -380,7 +408,7 @@ function bossSwipeUp(event){const start=bossSwipeStart;bossSwipeStart=null;if(!s
 function bossSelector(offset=0,bossOverride=null){
  const boss=bossOverride||selectedBoss(),index=BOSS_CATALOG.findIndex(x=>x.id===boss.id);
  const image=boss.art?`<image href="assets/${boss.art}.webp" x="27.8454145" y="129.258977" width="342.235342" height="192.405037" clip-path="url(#boss-art-clip)"/>`:`<g clip-path="url(#boss-art-clip)"><rect x="32.2" y="135" width="326" height="129" fill="#080605"/><text x="195" y="207" text-anchor="middle" font-size="48" fill="#bb8c48">?</text><text x="195" y="243" text-anchor="middle" font-size="10" fill="#d5b780">EM PREPARAÇÃO</text></g>`;
- return `<div class="boss-position" style="transform:translateY(${offset}px)"><div class="boss-slide"><svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><defs><clipPath id="boss-art-clip"><path d="M47.27 135.242 L44.63 137.606 L32.199 148.112 L32.254 250.197 L48.811 264.058 L162.941 264.442 L341.535 264.278 L358.31 250.417 L358.366 203.005 L358.255 147.672 L342.03 133.922 L48.535 133.812 Z"/></clipPath></defs><image href="assets/boss-frame.webp" preserveAspectRatio="none" width="1" height="1" transform="matrix(0 161.721466 -357.080083 0 373.5402038 118.249554)"/>${image}<text x="195" y="294.5225" text-anchor="middle" font-size="${Math.min(16.5772,350/(boss.name.length+10)*1.5)}" font-weight="700">BOSS ${String(boss.number).padStart(2,'0')} - ${esc(boss.name.toUpperCase())}</text></svg></div><div class="boss-swipe-zone" role="group" aria-label="Selecionar Boss: ${esc(boss.name)}" onpointerdown="bossSwipeDown(event)" onpointerup="bossSwipeUp(event)" onpointercancel="bossSwipeStart=null"><button class="boss-arrow previous" aria-label="Boss anterior" onclick="changeBoss(-1)" ${index===0?'disabled':''}>‹</button><button class="boss-arrow next" aria-label="Próximo Boss" onclick="changeBoss(1)" ${index===BOSS_CATALOG.length-1?'disabled':''}>›</button></div><div class="boss-dots" aria-label="Boss ${index+1} de ${BOSS_CATALOG.length}">${BOSS_CATALOG.map((x,i)=>`<i class="${i===index?'active':''}"></i>`).join('')}</div></div>`;
+ return `<div class="boss-position" style="transform:translateY(${100*offset/844}%)"><div class="boss-slide"><svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><defs><clipPath id="boss-art-clip"><path d="M47.27 135.242 L44.63 137.606 L32.199 148.112 L32.254 250.197 L48.811 264.058 L162.941 264.442 L341.535 264.278 L358.31 250.417 L358.366 203.005 L358.255 147.672 L342.03 133.922 L48.535 133.812 Z"/></clipPath></defs><image href="assets/boss-frame.webp" preserveAspectRatio="none" width="1" height="1" transform="matrix(0 161.721466 -357.080083 0 373.5402038 118.249554)"/>${image}<text x="195" y="294.5225" text-anchor="middle" font-size="${Math.min(16.5772,350/(boss.name.length+10)*1.5)}" font-weight="700">BOSS ${String(boss.number).padStart(2,'0')} - ${esc(boss.name.toUpperCase())}</text></svg></div><div class="boss-swipe-zone" role="group" aria-label="Selecionar Boss: ${esc(boss.name)}" onpointerdown="bossSwipeDown(event)" onpointerup="bossSwipeUp(event)" onpointercancel="bossSwipeStart=null"><button class="boss-arrow previous" aria-label="Boss anterior" onclick="changeBoss(-1)" ${index===0?'disabled':''}>‹</button><button class="boss-arrow next" aria-label="Próximo Boss" onclick="changeBoss(1)" ${index===BOSS_CATALOG.length-1?'disabled':''}>›</button></div><div class="boss-dots" aria-label="Boss ${index+1} de ${BOSS_CATALOG.length}">${BOSS_CATALOG.map((x,i)=>`<i class="${i===index?'active':''}"></i>`).join('')}</div></div>`;
 }
 function updateDungeonCode(input){
  const code=input.value.replace(/[^0-9]/g,'').slice(0,6);input.value=code;state.multiplayerRoomCode=code;
@@ -407,23 +435,13 @@ function multiplayerEntry(){
 // Local-only lobby view model. A room transport can replace the preview actions later.
 let multiplayerRoom=null,lobbyCharacterPicker=null;
 function createLobbyPreview(code,bossId){
+ if(!state.characters.length){goto('characters');return;}
  if(multiplayerRoom?.code===code&&multiplayerRoom.bossId===bossId)return;
  const character=state.characters.find(p=>p.id===(state.multiplayerCharacter||state.primary))||state.characters[0];
  multiplayerRoom={code,bossId,hostId:'local-host',viewerId:'local-host',bossControllerId:null,members:[{id:'local-host',character:{...character},seat:1,ready:false,deckMode:state.mode||'digital'}],message:''};
- setPreviewPlayerCount(4,false);
+
 }
 function lobbyViewer(){return multiplayerRoom?.members.find(p=>p.id===multiplayerRoom.viewerId)}
-function setPreviewPlayerCount(count,redraw=true){
- const room=multiplayerRoom;if(!room)return;count=Math.max(1,Math.min(8,Number(count)||1));
- const host=room.members.find(p=>p.id===room.hostId);room.members=[host];room.bossControllerId=null;
- const seats=[2,3,4,5,6,7];
- for(let i=1;i<count;i++)room.members.push({id:'preview-'+i,character:{...fresh('preview-character-'+i,'Jogador '+(i+1))},characters:Array.from({length:3},(_,j)=>fresh('preview-character-'+i+(j?'-'+j:''),j?'Jogador '+(i+1)+' · '+(j+1):'Jogador '+(i+1))),seat:i<=6?seats[i-1]:null,ready:false,deckMode:'digital'});
- if(count===8)room.bossControllerId=room.members.at(-1).id;
- host.seat=1;host.ready=false;room.message='';if(!room.members.some(p=>p.id===room.viewerId))room.viewerId=room.hostId;
- if(redraw)render();
-}
-function setPreviewViewer(id){if(!multiplayerRoom?.members.some(p=>p.id===id))return;multiplayerRoom.viewerId=id;multiplayerRoom.message='';lobbyCharacterPicker=null;if(b()?.multiplayer){b().viewerId=id;combatDialog=null}render()}
-function setPreviewReady(id,value){const member=multiplayerRoom?.members.find(p=>p.id===id);if(!member||member.id===multiplayerRoom.hostId)return;member.ready=!!value;multiplayerRoom.message='';render()}
 function chooseLobbySeat(seat){
  const room=multiplayerRoom,me=lobbyViewer();if(!room||!me)return;
  const occupied=seat==='boss'?room.bossControllerId:room.members.find(p=>p.seat===seat)?.id;
@@ -445,10 +463,10 @@ function confirmLobbyCharacter(){
 }
 function lobbyCharacterOverlay(){
  if(state.screen!=='multiplayerLobby'||!lobbyCharacterPicker)return '';
- let out=overlayFrame()+artImage('separator',70.937,235,248.125,15.582)+`<svg class="art-text-layer" viewBox="0 0 390 844"><text x="195" y="197" text-anchor="middle" font-size="24" font-weight="700">ESCOLHE O TEU</text><text x="195" y="225" text-anchor="middle" font-size="24" font-weight="700">PERSONAGEM:</text></svg>`;
+ let out=overlayFrame()+artImage('separator',70.937,235,248.125,15.582)+`<svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><text x="195" y="197" text-anchor="middle" font-size="24" font-weight="700">ESCOLHE O TEU</text><text x="195" y="225" text-anchor="middle" font-size="24" font-weight="700">PERSONAGEM:</text></svg>`;
  const players=lobbyOwnedCharacters(),step=Math.min(124.665,370/Math.max(1,players.length)),w=Math.min(82.317,step*.66),h=w*1.0525;
  players.forEach((p,i)=>{const x=195-w/2,y=257.705+i*step,selected=lobbyCharacterPicker.selectedId===p.id;
- out+=`<button class="heal-choice ${selected?'selected':''}" style="${combatPos(x-7,y-3,w+14,h+35)}" aria-label="Escolher ${esc(p.name)} — ${p.maxHp} HP" aria-pressed="${selected}" onclick="selectLobbyCharacter('${p.id}')"></button>`+portrait(p,x,y,w,h)+`<svg class="art-text-layer" viewBox="0 0 390 844"><text x="195" y="${y+h+14}" text-anchor="middle" font-size="${Math.min(12,160/Math.max(1,p.name.length*.65))}" font-weight="700">${esc(p.name)}</text><text x="195" y="${y+h+28}" text-anchor="middle" font-size="11">${p.maxHp}/${p.maxHp} HP</text></svg>`;
+ out+=`<button class="heal-choice ${selected?'selected':''}" style="${combatPos(x-7,y-3,w+14,h+35)}" aria-label="Escolher ${esc(p.name)} — ${p.maxHp} HP" aria-pressed="${selected}" onclick="selectLobbyCharacter('${p.id}')"></button>`+portrait(p,x,y,w,h)+`<svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><text x="195" y="${y+h+14}" text-anchor="middle" font-size="${Math.min(12,160/Math.max(1,p.name.length*.65))}" font-weight="700">${esc(p.name)}</text><text x="195" y="${y+h+28}" text-anchor="middle" font-size="11">${p.maxHp}/${p.maxHp} HP</text></svg>`;
  });out+=overlayOption('PICK','confirmLobbyCharacter()',645.809,!players.some(p=>p.id===lobbyCharacterPicker.selectedId))+`<button class="heal-cancel" onclick="cancelLobbyCharacterPicker()">CANCELAR</button>`;
  return `<div class="battle-art-overlay" role="dialog" aria-modal="true" aria-label="Escolher personagem multiplayer">${out}</div>`;
 }
@@ -483,14 +501,8 @@ function multiplayerLobby(){
  content+=action+`<div class="lobby-status" role="status">${esc(room.message||(host&&!lobbyCanFight()?'A aguardar READY dos jogadores.':!host&&me.ready?'Estás pronto. Aguarda o HOST.':''))}</div>`;
  return artScene(content);
 }
-function multiplayerPreviewTools(){
- if(state.screen==='multiplayerEntry')return `<details class="multiplayer-tools"><summary>Testar entrada</summary><p>Simulação local: rejeição do código pela sala.</p><button class="smallbtn" onclick="rejectDungeonCode()">SIMULAR CÓDIGO INCORRETO</button></details>`;
- const fighting=state.screen==='battle'&&b()?.multiplayer;
- if(!multiplayerRoom||state.screen!=='multiplayerLobby'&&!fighting)return '';
- const room=multiplayerRoom;
- return `<details class="multiplayer-tools"><summary>${fighting?'Testar combate':'Testar preparação'}</summary><p>Simulação local. Sem ligação entre dispositivos.</p>${fighting?'':`<label>Participantes <select aria-label="Número de participantes no teste" onchange="setPreviewPlayerCount(this.value)">${[1,2,3,4,5,6,7,8].map(n=>`<option ${room.members.length===n?'selected':''}>${n}</option>`).join('')}</select></label>`}<label>Ver como <select aria-label="Ver preparação como" onchange="setPreviewViewer(this.value)">${room.members.map(p=>`<option value="${p.id}" ${room.viewerId===p.id?'selected':''}>${esc(p.character.name)}${p.id===room.hostId?' (HOST)':''}${room.bossControllerId===p.id?' (BOSS)':''}</option>`).join('')}</select></label>${fighting?`<button class="smallbtn" onclick="viewCurrentMultiplayerTurn()" ${actor().id==='boss'&&!b().bossControllerId?'disabled':''}>VER TURNO ATUAL</button>`:room.members.filter(p=>p.id!==room.hostId).map(p=>`<label><input type="checkbox" aria-label="READY de ${esc(p.character.name)}" ${p.ready?'checked':''} onchange="setPreviewReady('${p.id}',this.checked)"> READY · ${esc(p.character.name)}</label>`).join('')}</details>`;
-}
 function party(){
+ if(!state.characters.length)return characters();
  const multiplayer=state.playMode==='multiplayer';
  const selected=state.characters.find(p=>p.id===state.multiplayerCharacter)||state.characters.find(p=>p.id===state.primary)||state.characters[0];
  const players=multiplayer?[selected]:state.characters;
@@ -528,10 +540,10 @@ function multiplayerHealth(){
  const t=b(),me=t.players.find(p=>p.id===t.viewerId),bossView=t.viewerId===t.bossControllerId;
  let content='';
  if(me)content+=artText(me.name+(me.alive?'':' · DEAD'),35.8,381.225,12.75,700,250)+artText('NVL '+me.level,320.494,379.775,10.9)+combatHp(me.id,me,15.693,382.686,357.733,18.958);
- else content+=`<svg class="art-text-layer" viewBox="0 0 390 844"><text x="195" y="388" text-anchor="middle" font-size="11" font-weight="700">${bossView?'CONTROLO DO BOSS':'A OBSERVAR A BATALHA'}</text></svg>`;
+ else content+=`<svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><text x="195" y="388" text-anchor="middle" font-size="11" font-weight="700">${bossView?'CONTROLO DO BOSS':'A OBSERVAR A BATALHA'}</text></svg>`;
  const players=bossView?t.players:t.players.filter(p=>p.id!==t.viewerId),rows=Math.max(1,Math.ceil(players.length/7)),perRow=Math.min(7,players.length),step=72/rows,w=Math.min(43,(step-14)/1.0525),h=w*1.0525;
  players.forEach((p,i)=>{const row=Math.floor(i/7),count=Math.min(7,players.length-row*7),cx=18+354/count*(i%7+.5),x=cx-w/2,y=(rows>1?406:411)+row*step;
-  content+=`<div class="multiplayer-ally ${p.alive?'':'fallen'}" aria-label="${esc(p.name)}: ${p.hp}/${p.maxHp} HP">${portrait(p,x,y,w,h)}<svg class="art-text-layer" viewBox="0 0 390 844"><text x="${cx}" y="${y+h+7}" text-anchor="middle" font-size="${Math.min(7,354/count/Math.max(1,p.name.length*.65))}" font-weight="700">${esc(p.name)}</text><text x="${cx}" y="${y+h+15}" text-anchor="middle" font-size="6">${p.hp}/${p.maxHp} HP${p.alive?'':' · MORTO'}</text></svg></div>`;
+  content+=`<div class="multiplayer-ally ${p.alive?'':'fallen'}" aria-label="${esc(p.name)}: ${p.hp}/${p.maxHp} HP">${portrait(p,x,y,w,h)}<svg class="art-text-layer" viewBox="0 0 390 844" preserveAspectRatio="none"><text x="${cx}" y="${y+h+7}" text-anchor="middle" font-size="${Math.min(7,354/count/Math.max(1,p.name.length*.65))}" font-weight="700">${esc(p.name)}</text><text x="${cx}" y="${y+h+15}" text-anchor="middle" font-size="6">${p.hp}/${p.maxHp} HP${p.alive?'':' · MORTO'}</text></svg></div>`;
  });return content;
 }
 function historyMarkup(value){
@@ -623,6 +635,7 @@ function animateDraw(c){
 function fitScreen(){
  const screen=$('app');if(!screen)return;
  const frame=document.querySelector('.device');
+ if(window.matchMedia('(max-width:600px), (hover:none) and (pointer:coarse)').matches){screen.style.zoom='1';return;}
  const gap=window.innerWidth>500?56:12;
  const previewScale=Math.min(1,(window.innerWidth-12)/390,(window.innerHeight-gap)/844);
  frame.style.setProperty('--preview-scale',String(Math.max(.1,previewScale)));
@@ -652,7 +665,7 @@ function animateTurnChange(previous){
   node.animate([{transform:`translateX(${dx}px) scale(${scale})`,opacity:former?(former.classList.contains('past')?.38:1):0,filter:former?.classList.contains('past')?'grayscale(.8)':'grayscale(0)'},{transform:'translateX(0) scale(1)',opacity:node.classList.contains('past')?.38:1,filter:node.classList.contains('past')?'grayscale(.8)':'grayscale(0)'}],{duration:650,easing:'cubic-bezier(.22,.61,.36,1)'});
  });
 }
-function render(){const previewToolsOpen=document.querySelector('.multiplayer-tools')?.open;const previousTrack=document.getElementById('turn-strip');const previousHp=Object.fromEntries([...document.querySelectorAll('[data-hp-id]')].map(el=>[el.dataset.hpId,el.getBoundingClientRect().width/el.parentElement.getBoundingClientRect().width*100]));initialiseBackground();let content=state.screen==='multiplayerLobby'?multiplayerLobby():state.screen==='multiplayerEntry'?multiplayerEntry():state.screen==='fightMode'?fightMode():state.screen==='battleCharacters'?battleCharacters():state.screen==='welcome'?welcome():state.screen==='characters'?characters():state.screen==='home'?home():state.screen==='character'?character():state.screen==='fight'?fight():state.screen==='party'?party():state.screen==='history'?history():state.screen==='battle'&&b()?battleScreen():home();$('app').classList.toggle('art-layout',['welcome','home','fightMode','characters','character','battleCharacters','party','battle','multiplayerEntry','multiplayerLobby'].includes(state.screen));$('app').innerHTML=content;animateTurnChange(previousTrack);$('modalroot').innerHTML=modal();$('multiplayer-preview-tools').innerHTML=multiplayerPreviewTools();const previewTools=document.querySelector('.multiplayer-tools');if(previewTools&&previewToolsOpen)previewTools.open=true;fitScreen();document.querySelectorAll('[data-hp-id]').forEach(el=>{const next=el.dataset.percent,old=previousHp[el.dataset.hpId];if(Number.isFinite(old)&&Math.abs(old-Number(next))>.01){el.style.width=old+'%';requestAnimationFrame(()=>requestAnimationFrame(()=>{if(el.isConnected)el.style.width=next+'%'}))}})}
+function render(){const previousTrack=document.getElementById('turn-strip');const previousHp=Object.fromEntries([...document.querySelectorAll('[data-hp-id]')].map(el=>[el.dataset.hpId,el.getBoundingClientRect().width/el.parentElement.getBoundingClientRect().width*100]));initialiseBackground();let content=state.screen==='multiplayerLobby'?multiplayerLobby():state.screen==='multiplayerEntry'?multiplayerEntry():state.screen==='fightMode'?fightMode():state.screen==='battleCharacters'?battleCharacters():state.screen==='welcome'?welcome():state.screen==='characters'?characters():state.screen==='home'?home():state.screen==='character'?character():state.screen==='fight'?fight():state.screen==='party'?party():state.screen==='history'?history():state.screen==='battle'&&b()?battleScreen():home();$('app').classList.toggle('art-layout',['welcome','home','fightMode','characters','character','battleCharacters','party','battle','multiplayerEntry','multiplayerLobby'].includes(state.screen));$('app').innerHTML=content;animateTurnChange(previousTrack);$('modalroot').innerHTML=modal();renderNavigation();fitScreen();document.querySelectorAll('[data-hp-id]').forEach(el=>{const next=el.dataset.percent,old=previousHp[el.dataset.hpId];if(Number.isFinite(old)&&Math.abs(old-Number(next))>.01){el.style.width=old+'%';requestAnimationFrame(()=>requestAnimationFrame(()=>{if(el.isConnected)el.style.width=next+'%'}))}})}
 render();
 window.addEventListener('resize',fitScreen);
 </script><script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(console.warn));}</script></body></html>
