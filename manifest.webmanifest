@@ -1,11 +1,11 @@
 {
-  "id": "/BBB---BigBossBattle/",
+  "id": "./",
   "name": "BBB — Big Boss Battle",
   "short_name": "BBB",
   "description": "Big Boss Battle — aventuras e boss fights com amigos.",
   "start_url": "./",
   "scope": "./",
-  "display": "standalone",
+  "display": "fullscreen",
   "background_color": "#090908",
   "theme_color": "#1a120d",
   "orientation": "portrait",
@@ -28,5 +28,9 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "display_override": [
+    "fullscreen",
+    "standalone"
   ]
 }
