@@ -1,12 +1,14 @@
 // App shell offline; dados de salas/autenticação nunca são guardados no cache.
-const CACHE='bbb-online-v2-20261014-2';
-const SHELL=['./','./index.html','./config.js','./online.js','./online.css','./vendor/supabase-2.117.3.js','./manifest.webmanifest','./icons/bbb-192.png','./icons/bbb-512.png'];
+const CACHE='bbb-online-v2-20261014-boss-media-webp-2';
+const SHELL=['./','./index.html','./config.js','./online.js','./online.css','./vendor/supabase-2.117.3.js','./manifest.webmanifest','./icons/bbb-192.png','./icons/bbb-512.png','./assets/stone-golem.webp','./assets/stone-golem-dead.webp','./assets/queen-mothra.webp','./assets/queen-mothra-dead.webp'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL))));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const name of await caches.keys())if(name.startsWith('bbb-')&&name!==CACHE)await caches.delete(name);await self.clients.claim();})()));
 self.addEventListener('message',event=>{if(event.data==='SKIP_WAITING')self.skipWaiting();});
 self.addEventListener('fetch',event=>{
  const url=new URL(event.request.url);
  if(event.request.method!=='GET'||url.origin!==self.location.origin||/^\/(auth|rest|realtime)\/v1\//.test(url.pathname))return;
+ // MP4 range requests must keep the browser's native streaming behavior.
+ if(url.pathname.endsWith('.mp4'))return;
  event.respondWith((async()=>{
   const cache=await caches.open(CACHE);
   try{const response=await fetch(event.request);if(response.ok)await cache.put(event.request,response.clone());return response;}
