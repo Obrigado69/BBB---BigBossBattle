@@ -37,3 +37,9 @@ O teste com dois navegadores passou sem erros JavaScript de página:
 Aplicar o SQL, abrir a versão publicada em dois dispositivos e repetir criar/entrar/READY/FIGHT, reconexão e um turno de Boss humano. Confirmar o WebSocket Realtime no Supabase alojado. Verificar a instalação fullscreen num Android e num iPhone, incluindo notch, gestos e rotação. Estes dispositivos físicos e o GitHub Pages publicado não foram testados nesta execução.
 
 A chave pública e os providers do projeto Supabase foram consultados em modo de leitura; não foram criados utilizadores nem salas no projeto remoto.
+
+## Atualização visual — 18/10/2026
+
+Repetidas as 65 verificações SQL e o teste com duas sessões isoladas sobre o novo layout. Acrescentadas 21 verificações de controlos reais, vídeo contínuo e três dimensões de viewport. Capturados e inspecionados os 28 estados das pranchetas. As medidas, rotações, máscaras e pesos de fonte foram extraídos do AI; os gráficos de interface usam os PNGs fornecidos, convertidos sem perdas.
+
+Confirmado por hash que `online.js`, `config.js`, o manifesto, ambos os SQL, o vídeo King Mantis e as quatro imagens Stone Golem/Queen Mothra são idênticos ao último pack fornecido. As diferenças visuais dos dados de jogo (nomes, HP, cartas, prontidão e resultados) são intencionais e dependem da partida. Não foi testado nem alterado o backend alojado nesta atualização.

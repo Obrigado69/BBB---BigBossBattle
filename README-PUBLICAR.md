@@ -1,6 +1,8 @@
 # BBB — Big Boss Battle · multiplayer Supabase
 
-Esta versão parte de `BBB-novos-bosses-fullscreen-PWA (6).zip`. Conserva os quatro Bosses, a arte, o motor Singleplayer e os ecrãs originais. O multiplayer está integrado no `index.html`; o endereço antigo `multiplayer.html` encaminha para o jogo.
+Esta versão parte do pack otimizado de 14/10/2026, com o layout atualizado segundo `BBB_V2.ai` e os novos assets transparentes. Conserva os quatro Bosses, as regras e o motor Singleplayer. O multiplayer está integrado no `index.html`; o endereço antigo `multiplayer.html` encaminha para o jogo.
+
+**Se o multiplayer do pack anterior já funciona, não repitas o SQL.** Para esta atualização visual, segue `LE-ME-UPDATE-VISUAL.md` e publica todos os ficheiros, incluindo os três ficheiros `layout-*` e `assets/v2/`.
 
 ## Publicar
 

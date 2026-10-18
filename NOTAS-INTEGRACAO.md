@@ -1,5 +1,7 @@
 # Integração BBB v2
 
+Atualização visual de 18/10/2026: os ecrãs usam `layout-data.js`, `layout-v2.js`, `layout-v2.css` e `assets/v2/`, carregados depois do motor e do transporte originais. As coordenadas e a tipografia vêm do AI. Consulta primeiro `LE-ME-UPDATE-VISUAL.md`. Esta atualização não exige alterações SQL.
+
 Os lobbies do `index.html` já usam Supabase através de `online.js`. O protótipo online antigo encaminha para o jogo integrado.
 
 - A migração está em `supabase/multiplayer-v2.sql`; `supabase/schema.sql` é uma cópia do mesmo conteúdo.

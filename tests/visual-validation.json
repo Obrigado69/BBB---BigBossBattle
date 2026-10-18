@@ -1,0 +1,17 @@
+{
+  "version": "BBB visual V2 2026-10-18",
+  "base": "BBB-BigBossBattle-Supabase-OTIMIZADO-2026-10-14",
+  "checks": {
+    "sql": 65,
+    "layoutControls": 21,
+    "artboardStates": 28,
+    "independentBrowserSessions": 2
+  },
+  "newFiles": [
+    "layout-data.js",
+    "layout-v2.js",
+    "layout-v2.css",
+    "assets/v2/"
+  ],
+  "sqlChanges": false
+}

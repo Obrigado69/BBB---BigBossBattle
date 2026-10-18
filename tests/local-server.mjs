@@ -1,7 +1,7 @@
 // Banco PostgreSQL real (PGlite); apenas Auth e o transporte PostgREST são emulados.
 import {db,rpc} from './check-sql.mjs';
 import http from 'node:http';import fs from 'node:fs';import path from 'node:path';import {randomUUID} from 'node:crypto';
-const root=path.resolve('.');
+const root=path.resolve(process.env.BBB_WEB_ROOT||'.');
 const jwt=id=>Buffer.from(JSON.stringify({alg:'HS256',typ:'JWT'})).toString('base64url')+'.'+Buffer.from(JSON.stringify({sub:id,role:'authenticated',aud:'authenticated',exp:Math.floor(Date.now()/1000)+3600,is_anonymous:true})).toString('base64url')+'.local-test-only';
 export const sessions=[];
 export const server=http.createServer(async(req,res)=>{
