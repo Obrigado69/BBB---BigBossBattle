@@ -162,9 +162,9 @@
    return `<div data-turn-key="${id||'empty'}:${timelineIndex+offset}" data-centre="${r.x+w/2}" data-width="${w}" class="combat-turn ${offset<0&&p?'past':''}" aria-label="${offset===0?'Turno atual':'Turno'}: ${esc(p?.name||'')}">${nativePortrait(p,r)}${text(p?.name||'',r.x+w/2,offset===0?119.28:108.37,offset===0?9.83:6.84,'middle',w+4)}</div>`;
   }).join('')+'</div>';
  };
- combatHp=(id,p,x,y,w,h,enemy=false)=>{
+ combatHp=(id,p,x,y,w,h,enemy=false,thin=false)=>{
   const percent=Math.max(0,Math.min(100,100*p.hp/p.maxHp)),hidden=enemy&&!showBossHp();
-  return `<div class="combat-hp v2-hp ${enemy?'enemy':''}" style="${combatPos(x,y,w,h)}" role="progressbar" aria-label="Vida de ${esc(enemy?(p.name||bossName()):p.name)}" aria-valuemin="0" aria-valuemax="${hidden?100:p.maxHp}" aria-valuenow="${hidden?Math.round(percent):p.hp}"><div class="combat-hp-track"><div class="combat-hp-fill" data-hp-id="${id}" data-percent="${percent}" style="width:${percent}%"></div></div><img src="${asset('hp')}" alt="">${enemy?'':`<span class="combat-hp-value">${p.hp} / ${p.maxHp} HP</span>`}</div>`;
+  return `<div class="combat-hp v2-hp ${thin?'v2-hp-thin':''} ${enemy?'enemy':''}" style="${combatPos(x,y,w,h)}" role="progressbar" aria-label="Vida de ${esc(enemy?(p.name||bossName()):p.name)}" aria-valuemin="0" aria-valuemax="${hidden?100:p.maxHp}" aria-valuenow="${hidden?Math.round(percent):p.hp}"><div class="combat-hp-track"><div class="combat-hp-fill" data-hp-id="${id}" data-percent="${percent}" style="width:${percent}%"></div></div><img src="${asset(thin?'hp-thin':'hp')}" alt="">${enemy?'':`<span class="combat-hp-value">${p.hp} / ${p.maxHp} HP</span>`}</div>`;
  };
  battleScreen=()=>{
   const t=b(),a=actor(),page=t.multiplayer?19:10,isBoss=a.id==='boss',auto=isBoss&&automaticBoss(),boss=battleBoss();
@@ -173,7 +173,7 @@
   const frame=images(page,'box').find(im=>im.w>350),im=one(page,'boss');out+=image(frame)+image(im,bossImage());
   out+=bossVideo(boss,im);
   out+=text(bossName().toUpperCase(),195,150.19,20.2524,'middle',350);
-  if(t.split){t.split.children.forEach((c,i)=>{out+=combatHp(c.key,c,14.31,312+i*23,361.37,23,true)+text(c.name+(showBossHp()?' '+c.hp+'/'+c.maxHp:''),195,327+i*23,9);});}
+  if(t.split){t.split.children.forEach((c,i)=>{const y=[307.2482086,326.1691071][i];out+=combatHp(c.key,c,17.597837,y,354.8043346,29.1581222,true,true);});}
   else out+=combatHp('boss',t.boss,14.31,316.12,361.37,29.7,true)+(showBossHp()?text(t.boss.hp+' / '+t.boss.maxHp+' HP',195,355.714,14.13):'');
   if(t.multiplayer){
    const me=t.players.find(p=>p.id===t.viewerId),bossView=t.viewerId===t.bossControllerId;

@@ -29,3 +29,6 @@
 .v2-result-art{inset:0;width:100%;height:100%;border-radius:0}.v2-overlay .physical-card-value{font-size:calc(21.4121px*var(--v2-scale-x,1));border-radius:8px}.v2-overlay .physical-card-value[aria-label="Carta JOKER"]{font-size:calc(18px*var(--v2-scale-x,1))}
 #online-bar{display:none!important}#online-account form{background:#000;border:0;border-radius:0;border-image:none;box-shadow:none;position:relative}#online-account form::before{content:'';position:absolute;inset:-20px;z-index:-1;background:url('assets/v2/box.webp') center/100% 100% no-repeat}#online-account{background:#000b}
 @media(prefers-reduced-motion:reduce){.v2-nebula,.v2-die.rolling img{animation:none}}
+
+/* BBB_V2-20: two independently animated thin Boss bars. */
+.v2-hp-thin .combat-hp-track{left:2.5%;right:2.5%;top:43%;height:14%;}

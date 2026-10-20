@@ -174,9 +174,9 @@ const MAX_PARTY=3;
 // Add future bosses here; behavior/skills are data slots for the next mechanics pass.
 const BOSS_CATALOG=[
  {id:'mantis',number:1,name:'King Mantis',art:'king-mantis',battleVideo:'./assets/king-mantis-battle.mp4',baseHp:50,available:true,behavior:'basic',skills:[]},
- {id:'boss-02',number:2,name:'Stone Golem',art:'stone-golem',deadArt:'./assets/stone-golem-dead.webp',baseHp:150,available:true,behavior:'alternating-aoe',skills:['aoe-below-half']},
- {id:'boss-03',number:3,name:'Queen Mothra',art:'queen-mothra',deadArt:'./assets/queen-mothra-dead.webp',baseHp:200,available:true,behavior:'double-heal',skills:['heal-every-third-turn','double-damage-below-fifth']},
- {id:'boss-04',number:4,name:'Boss 4',art:null,baseHp:300,available:true,behavior:'split-at-half',skills:['split-aoe-normal']}
+ {id:'boss-02',number:2,name:'Stone Golem',art:'stone-golem',battleVideo:'./assets/stone-golem-battle.mp4',deadArt:'./assets/stone-golem-dead.webp',baseHp:150,available:true,behavior:'alternating-aoe',skills:['aoe-below-half']},
+ {id:'boss-03',number:3,name:'Queen Mothra',art:'queen-mothra',battleVideo:'./assets/queen-mothra-battle.mp4',deadArt:'./assets/queen-mothra-dead.webp',baseHp:200,available:true,behavior:'double-heal',skills:['heal-every-third-turn','double-damage-below-fifth']},
+ {id:'boss-04',number:4,name:'Puppet Master & Dummy',art:null,baseHp:300,available:true,behavior:'split-at-half',skills:['split-aoe-normal']}
 ];
 const selectedBoss=()=>BOSS_CATALOG.find(x=>x.id===state.selectedBossId)||BOSS_CATALOG[0];
 const battleBoss=()=>BOSS_CATALOG.find(x=>x.id===state.battle?.boss.id)||BOSS_CATALOG[0];
