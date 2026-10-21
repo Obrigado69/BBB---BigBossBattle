@@ -36,7 +36,7 @@ r=await room('boss-03',true);r=await edit(r,t=>{t.turn=1;t.round=3;t.boss.hp=20;
 r=await command(ids[1],r,'boss');assert.equal(r.room.battle.boss.hp,32);assert.equal(r.room.battle.phase,'draw');count+=2;
 r=await edit(r,t=>nextCard(t,'boss','A'));r=await command(ids[1],r,'draw');r=await command(ids[1],r,'boss');assert.equal(r.room.battle.boss.hp,44);assert.equal(r.room.battle.boss.healingCompleteRound,3);assert.equal(r.room.battle.boss.doubleDamage,true);count+=3;
 // Boss 4: split e cartas AOE limitadas; partida com um jogador.
-r=await room('boss-04',true);r=await edit(r,t=>{t.boss.hp=151;t.phase='action';t.chain=[{v:'2'}];});r=await command(ids[0],r,'attack');assert.equal(r.room.battle.split.children.length,2);assert.equal(r.room.battle.boss.hp,200);assert.equal(r.room.battle.split.order.length,3);count+=3;
+r=await room('boss-05',true);r=await edit(r,t=>{t.boss.hp=151;t.phase='action';t.chain=[{v:'2'}];});r=await command(ids[0],r,'attack');assert.equal(r.room.battle.split.children.length,2);assert.equal(r.room.battle.boss.hp,200);assert.equal(r.room.battle.split.order.length,3);count+=3;
 r=await command(ids[1],r,'draw');assert(['2','3','4','5','6'].includes(r.room.battle.chain[0].v));count++;
 r=await command(ids[1],r,'boss');assert.equal(r.room.battle.turn,1);count++;
 // D20: pertence à vítima, valor no servidor, repetição rejeitada.

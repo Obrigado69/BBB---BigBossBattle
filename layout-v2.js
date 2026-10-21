@@ -45,6 +45,8 @@
   out+=image({...r,asset:'portrait'});
   if(p?.alive===false)out+=text('DEAD',cx,cy+r.w*.05,r.w*.14,'middle',r.w*.6);
   else if(plus&&!p?.photo)out+=text('+',cx,cy+r.w*.06,r.w*.20,'middle',r.w*.6);
+  if(p?.alive!==false&&p?.frozen)out+=text('ICE',cx,cy+r.w*.05,r.w*.14,'middle',r.w*.6);
+  if(p?.alive!==false&&p?.bleedTurns>0)out+=text('BLEED '+p.bleedTurns,cx,cy+r.w*.24,r.w*.105,'middle',r.w*.8);
   if(selected)out+=`<span class="v2-selection-ring" style="${rect(r)}" aria-hidden="true"></span>`;
   if(editable)out+=`<label class="portrait-upload v2-photo-upload" style="${combatPos(cx-rad,cy-rad,rad*2,rad*2)}"><input type="file" accept="image/*" aria-label="Escolher fotografia de perfil" onchange="updateProfilePhoto(this)"></label>`;
   return out;
@@ -89,11 +91,11 @@
   if(!boss.battleVideo)return '';
   const coords=[...(im.clip||'').matchAll(/(-?[\d.]+)\s+(-?[\d.]+)/g)].map(m=>[+m[1],+m[2]]);
   const xs=coords.map(p=>p[0]),ys=coords.map(p=>p[1]),x=coords.length?Math.min(...xs):im.x,y=coords.length?Math.min(...ys):im.y,w=coords.length?Math.max(...xs)-x:im.w,h=coords.length?Math.max(...ys)-y:im.h,clipId='v2video'+(++uid);
-  return `<svg class="art-text-layer v2-svg" viewBox="0 0 390 844" preserveAspectRatio="none"><defs><clipPath id="${clipId}"><path d="${im.clip||`M${x} ${y}h${w}v${h}h${-w}Z`}"/></clipPath></defs><foreignObject x="${x}" y="${y}" width="${w}" height="${h}" clip-path="url(#${clipId})"><video xmlns="http://www.w3.org/1999/xhtml" class="battle-boss-video" data-boss-video="${esc(boss.id)}" src="${boss.battleVideo}" poster="${boss.art?bbbAsset(boss.art+'.webp'):bossPlaceholder}" autoplay muted loop playsinline preload="metadata" aria-label="${esc(boss.name)} animado" onerror="this.style.display='none'"></video></foreignObject></svg>`;
+  return `<svg class="art-text-layer v2-svg" viewBox="0 0 390 844" preserveAspectRatio="none"><defs><clipPath id="${clipId}"><path d="${im.clip||`M${x} ${y}h${w}v${h}h${-w}Z`}"/></clipPath></defs><foreignObject x="${x}" y="${y}" width="${w}" height="${h}" clip-path="url(#${clipId})"><video xmlns="http://www.w3.org/1999/xhtml" class="battle-boss-video" data-boss-video="${esc(boss.id)}" src="${boss.battleVideo}" poster="${bossArtwork(boss)}" autoplay muted loop playsinline preload="metadata" aria-label="${esc(boss.name)} animado" onerror="this.style.display='none'"></video></foreignObject></svg>`;
  }
  function bossPanel(page,boss,swipe=false){
   const frame=images(page,'box').find(im=>im.w>350),im=one(page,'boss');if(!frame||!im)return '';
-  let out=`<div class="boss-position"><div class="boss-slide">${image(frame)}${image(im,boss.art?bbbAsset(boss.art+'.webp'):bossPlaceholder)}${bossVideo(boss,im)}${bossTitle(boss,page)}</div>`;
+  let out=`<div class="boss-position"><div class="boss-slide">${image(frame)}${image(im,bossArtwork(boss))}${bossVideo(boss,im)}${bossTitle(boss,page)}</div>`;
   if(swipe){const index=BOSS_CATALOG.indexOf(boss);out+=`<div class="boss-swipe-zone v2-boss-swipe" style="${rect(frame)}" role="group" aria-label="Selecionar Boss: ${esc(boss.name)}" onpointerdown="bossSwipeDown(event)" onpointerup="bossSwipeUp(event)" onpointercancel="bossSwipeStart=null"><button class="boss-arrow previous" aria-label="Boss anterior" onclick="changeBoss(-1)" ${index===0?'disabled':''}>‹</button><button class="boss-arrow next" aria-label="Próximo Boss" onclick="changeBoss(1)" ${index===BOSS_CATALOG.length-1?'disabled':''}>›</button></div>`;}
   return out+'</div>';
  }
@@ -155,7 +157,7 @@
  }
  lobbyCharacterOverlay=()=>state.screen==='multiplayerLobby'&&lobbyCharacterPicker?characterPicker('online',lobbyOwnedCharacters(),lobbyCharacterPicker.selectedId):'';
  combatTimeline=()=>{
-  const t=b(),seq=t.split?t.split.order.filter(splitEntryActive).map(entry=>entry.child!==undefined?{id:t.split.children[entry.child].key,name:t.split.children[entry.child].name}:t.players.find(p=>p.id===entry.id)):[...live(),{id:'boss',name:bossName(),photo:battleBoss().art?bossImage():null}];
+  const t=b(),seq=t.split?t.split.order.filter(splitEntryActive).map(entry=>entry.child!==undefined?{id:t.split.children[entry.child].key,name:t.split.children[entry.child].name}:t.players.find(p=>p.id===entry.id)):[...live(),{id:'boss',name:bossName(),photo:battleBoss().art||battleBoss().imageSrc?bossImage():null}];
   const current=seq.findIndex(p=>p.id===(actor().splitKey||actor().id)),past=t.completedTurns||[],xs=[22.654,69.961,117.264,164.78,229.904,277.21,324.514];
   return `<div id="turn-strip" class="turn-strip" data-index="${timelineIndex}">`+[-3,-2,-1,0,1,2,3].map((offset,i)=>{
    const id=offset<0?past[past.length+offset]:seq[(Math.max(0,current)+offset)%seq.length]?.id,p=seq.find(p=>p.id===id)||t.players.find(p=>p.id===id)||t.split?.children.find(c=>c.key===id),w=offset===0?60.44:42.12,h=offset===0?65.9:45.93,r=box(xs[i],offset===0?45.13:55.12,w,h);
@@ -177,18 +179,18 @@
   else out+=combatHp('boss',t.boss,14.31,316.12,361.37,29.7,true)+(showBossHp()?text(t.boss.hp+' / '+t.boss.maxHp+' HP',195,355.714,14.13):'');
   if(t.multiplayer){
    const me=t.players.find(p=>p.id===t.viewerId),bossView=t.viewerId===t.bossControllerId;
-   if(me)out+=text(me.name,35.8,388.37,12.75,'start',268)+text('NVL '+me.level,320.494,386.92,10.9,'start',52)+combatHp(me.id,me,14.31,387.64,361.37,29.7);
+   if(me)out+=text(me.name+(me.frozen?' · ICE':'')+(me.bleedTurns>0?' · BLEED '+me.bleedTurns:''),35.8,388.37,12.75,'start',268)+text('NVL '+me.level,320.494,386.92,10.9,'start',52)+combatHp(me.id,me,14.31,387.64,361.37,29.7);
    else out+=text(bossView?'CONTROLO DO BOSS':'A OBSERVAR',195,400,12);
    const others=bossView?t.players:t.players.filter(p=>p.id!==t.viewerId),count=others.length,slots=images(19,'portrait').filter(im=>im.y>400).sort((a,b)=>a.x-b.x);
    others.forEach((p,i)=>{const r=count===7?slots[i]:box(18+354/count*(i+.5)-22.46,422,44.92,48.98);out+=nativePortrait(p,r)+text(p.name,r.x+r.w/2,478.68,6.6749,'middle',50)+text(p.hp+'/'+p.maxHp+' HP',r.x+r.w/2,485.63,6.0127,'middle',50);});
-  }else t.players.forEach((p,i)=>{const y=[394.41,438.12,481.82][i];out+=text(p.name,35.8,y+.73,12.75,'start',268)+text('NVL '+p.level,320.494,y-.72,10.9,'start',52)+combatHp(p.id,p,14.31,y,361.37,29.7);});
+  }else t.players.forEach((p,i)=>{const y=[394.41,438.12,481.82][i];out+=text(p.name+(p.frozen?' · ICE':'')+(p.bleedTurns>0?' · BLEED '+p.bleedTurns:''),35.8,y+.73,12.75,'start',268)+text('NVL '+p.level,320.494,y-.72,10.9,'start',52)+combatHp(p.id,p,14.31,y,361.37,29.7);});
   const canDraw=t.phase==='draw'&&!auto&&!cardBusy&&canActInBattle(),chain=cardBusy?t.chain.slice(0,-1):t.chain,e=calc();
   out+=`<button class="combat-position combat-deck deck-source" aria-label="${t.mode==='physical'?'Introduzir carta física':'Comprar carta'}" onclick="combatDraw()" ${canDraw?'':'disabled'}>${cardHTML(null,true)}</button><div class="combat-position combat-reveal" id="reveal-slot">${!cardBusy&&chain.length?cardHTML(chain.at(-1)):''}</div><div class="combat-position combat-chain">${chain.length?esc(chain.map(c=>c.v).join(' + ')):''}</div>`;
   const canAttack=canActInBattle()&&(t.phase==='action'||t.phase==='bossAction'&&!auto),bossControls=t.multiplayer?t.viewerId===t.bossControllerId:isBoss;
   if(bossControls&&isBoss){const healing=bossHealingTurn(),r=box(151.74,654.29,86.51,28.43);out+=image({...r,asset:healing?'heal':'attack'})+hit(r,healing?'HEAL':'ATTACK',healing?'combatHeal()':'combatAttack()',{disabled:!canAttack});}
   else{out+=image(one(page,'attack'))+image(one(page,'heal'))+hit(one(page,'attack'),'ATTACK','combatAttack()',{disabled:!canAttack})+hit(one(page,'heal'),'HEAL','combatHeal()',{disabled:t.phase!=='action'||!canActInBattle()});}
   const status=t.outcome?'Batalha terminada':t.phase==='revive'?'Última chance · D20':isDeadSpectator()?'DEAD · A assistir':auto?'O Boss prepara o turno…':t.multiplayer&&!canActInBattle()?'Turno de '+a.name:t.phase==='draw'?(chain.length?'Retira outra carta.':'Toca no baralho para retirar uma carta.'):'Ataque '+(e.base+e.k*2+(a.attack||0))+' · Cura '+(e.base+e.q*2+(a.heal||0));
-  out+=`<div class="combat-position combat-status" role="status">${esc(status)}</div><div class="combat-position combat-history" aria-label="Histórico de batalha" aria-live="polite">${t.history.slice(0,3).map(s=>`<div>${historyMarkup(s)}</div>`).join('')}</div>`;
+  out+=`<div class="combat-position combat-status" role="status">${esc('Ronda '+t.round+' · '+(bossAbilityStatus(t)?bossAbilityStatus(t)+' · ':'')+status)}</div><div class="combat-position combat-history" aria-label="Histórico de batalha" aria-live="polite">${t.history.slice(0,3).map(s=>`<div>${historyMarkup(s)}</div>`).join('')}</div>`;
   out+=hit(images(page,'box').at(-1),'FORFEIT','exitBattle()')+text('FORFEIT',195,795.59,14.3031);return artScene(out);
  };
  partyTargetOverlay=kind=>{
@@ -197,9 +199,9 @@
   if(attacking&&page===11)out+=text('VAIS ATACAR?',195,213.67,19.662);
   const slots=images(page,'portrait').filter(im=>im.i>=19).sort((a,b)=>Math.abs(a.y-b.y)>1?a.y-b.y:a.x-b.x);
   players.forEach((p,i)=>{let r=slots[i];if(!r)return;if(players.length===1)r={...r,x:195-r.w/2};
-   out+=nativePortrait(p,r,{selected:b().target===p.id})+text(p.name,r.x+r.w/2,r.y+r.h+(page===11?14.31:10.45),page===11?12.6672:9.0717,'middle',r.w+18)+text(p.hp+'/'+p.maxHp+' HP',r.x+r.w/2,r.y+r.h+(page===11?27.6:21.07),page===11?12.6672:9.0717,'middle',r.w+22)+hit({...r,h:r.h+32},p.name+' — '+p.hp+'/'+p.maxHp+' HP',`${attacking?'selectAttackTarget':'selectHealingTarget'}('${p.id}')`,{disabled:!p.alive,selected:b().target===p.id});
+   out+=nativePortrait(p,r,{selected:b().target===p.id})+text(p.name,r.x+r.w/2,r.y+r.h+(page===11?14.31:10.45),page===11?12.6672:9.0717,'middle',r.w+18)+text(p.hp+'/'+p.maxHp+' HP',r.x+r.w/2,r.y+r.h+(page===11?27.6:21.07),page===11?12.6672:9.0717,'middle',r.w+22)+hit({...r,h:r.h+32},p.name+' — '+p.hp+'/'+p.maxHp+' HP',`${attacking?'selectAttackTarget':'selectHealingTarget'}('${p.id}')`,{disabled:!p.alive||p.hp<=0||!attacking&&p.frozen,selected:b().target===p.id});
   });
-  out+=text('PICK',195,682.22,14.3031)+hit(images(page,'box').at(-1),'PICK',attacking?'confirmBossAttack()':'confirmHealing()',{disabled:!players.some(p=>p.id===b().target&&p.alive)})+`<button class="v2-cancel-small" onclick="closeCombatDialog()">CANCELAR</button>`;return layer(out,attacking?'Escolher quem atacar':'Escolher quem curar');
+  out+=text('PICK',195,682.22,14.3031)+hit(images(page,'box').at(-1),'PICK',attacking?'confirmBossAttack()':'confirmHealing()',{disabled:!players.some(p=>p.id===b().target&&p.alive&&p.hp>0&&(attacking||!p.frozen))})+`<button class="v2-cancel-small" onclick="closeCombatDialog()">CANCELAR</button>`;return layer(out,attacking?'Escolher quem atacar':'Escolher quem curar');
  };
  physicalCardOverlay=()=>{
   const page=12,boss=actor().id==='boss';let out=base(page,{overlay:true,skipText:t=>t.y>350&&t.y<500});

@@ -41,10 +41,10 @@ try{
  await p2.evaluate(()=>BBBOnline.leave());await wait(p2,()=>state.screen==='home');await p2.evaluate(()=>reconnectPlayer());await wait(p2,()=>state.screen==='battle');
  // PWA em subdiretório, shell offline e Singleplayer original.
  const manifest=await p1.evaluate(async()=>fetch('manifest.webmanifest').then(r=>r.json()));assert.equal(manifest.display,'fullscreen');assert.equal(manifest.scope,'./');
- await p2.evaluate(()=>BBBOnline.leave());await p2.evaluate(()=>{state.playMode='local';state.chosen=[state.primary];state.selectedBossId='boss-04';state.screen='party';render();begin();});await wait(p2,()=>b()&&!b().multiplayer&&state.screen==='battle');assert.equal(await evalp(p2,()=>b().boss.id),'boss-04');
+ await p2.evaluate(()=>BBBOnline.leave());await p2.evaluate(()=>{state.playMode='local';state.chosen=[state.primary];state.selectedBossId='boss-05';state.screen='party';render();begin();});await wait(p2,()=>b()&&!b().multiplayer&&state.screen==='battle');assert.equal(await evalp(p2,()=>b().boss.id),'boss-05');
  await p2.evaluate(()=>navigator.serviceWorker.ready);await wait(p2,()=>!!navigator.serviceWorker.controller);
  await c2.setOffline(true);await p2.reload();await wait(p2,()=>typeof render==='function');assert.equal(await evalp(p2,()=>BOSS_CATALOG.length),4);
- await p2.evaluate(()=>{state.playMode='local';state.chosen=[state.primary];state.selectedBossId='boss-04';state.screen='party';render();begin();});await wait(p2,()=>b()&&!b().multiplayer&&state.screen==='battle');
+ await p2.evaluate(()=>{state.playMode='local';state.chosen=[state.primary];state.selectedBossId='boss-05';state.screen='party';render();begin();});await wait(p2,()=>b()&&!b().multiplayer&&state.screen==='battle');
  while(await evalp(p2,()=>b().phase==='draw')){await p2.evaluate(()=>drawCard());await p2.waitForTimeout(1150);}
  await p2.evaluate(()=>playerAction('attack'));assert(await evalp(p2,()=>b().boss.hp<300));
  await p2.screenshot({path:'test-results/singleplayer-offline.png'});

@@ -27,6 +27,35 @@ create table if not exists private.bbb2_requests (
  room_id uuid references public.bbb2_rooms(id) on delete cascade, user_id uuid not null, request_id uuid not null,
  primary key(room_id,user_id,request_id)
 );
+
+create table if not exists private.bbb2_migrations (id text primary key,applied_at timestamptz not null default now());
+revoke all on private.bbb2_migrations from public,anon,authenticated;
+create or replace function private.bbb2_legacy_boss_ids(v jsonb) returns jsonb language plpgsql set search_path='' as $$
+declare result jsonb;key text;item jsonb;
+begin
+ if v is null then return null;end if;
+ if jsonb_typeof(v)='array' then select coalesce(jsonb_agg(private.bbb2_legacy_boss_ids(value)),'[]') into result from jsonb_array_elements(v);return result;end if;
+ if jsonb_typeof(v)<>'object' then return v;end if;
+ result:='{}';for key,item in select * from jsonb_each(v) loop
+  if key='defeated' and jsonb_typeof(item)='array' then
+   select coalesce(jsonb_agg(case when value='"boss-04"'::jsonb then '"boss-05"'::jsonb else value end),'[]') into item from jsonb_array_elements(item);
+  elsif key in ('boss_id','bossId','selectedBossId') and item='"boss-04"'::jsonb then item:='"boss-05"';
+  elsif key='boss' and jsonb_typeof(item)='object' then item:=private.bbb2_legacy_boss_ids(item);if item->>'id'='boss-04' then item:=jsonb_set(item,'{id}','"boss-05"');end if;
+  else item:=private.bbb2_legacy_boss_ids(item);end if;
+  result:=result||jsonb_build_object(key,item);
+ end loop;return result;
+end;$$;
+do $$begin
+ if not exists(select 1 from private.bbb2_migrations where id='boss-catalog-v3') then
+  update public.bbb2_profiles set characters=private.bbb2_legacy_boss_ids(characters);
+  update public.bbb2_members set character=private.bbb2_legacy_boss_ids(character);
+  update public.bbb2_rooms set boss_id=case when boss_id='boss-04' then 'boss-05' else boss_id end,battle=private.bbb2_legacy_boss_ids(battle),revision=revision+1;
+  update private.bbb2_states set battle=private.bbb2_legacy_boss_ids(battle);
+  insert into private.bbb2_migrations(id) values('boss-catalog-v3');
+ end if;
+end;$$;
+revoke all on function private.bbb2_legacy_boss_ids(jsonb) from public,anon,authenticated;
+
 create or replace function private.bbb2_member(rid uuid) returns boolean language sql security definer stable set search_path='' as $$
  select exists(select 1 from public.bbb2_members where room_id=rid and user_id=auth.uid());
 $$;
@@ -90,7 +119,7 @@ begin
  select value into c from jsonb_array_elements(p.characters) where value->>'id'=p_character;
  if c is null then raise exception 'Personagem não pertence à conta'; end if;
  if p_code is null then
-  if p_boss not in ('mantis','boss-02','boss-03','boss-04') or p_boss is null then raise exception 'Boss inválido'; end if;
+  if p_boss not in ('mantis','boss-02','boss-03','boss-04','boss-05','boss-06','boss-07','boss-08','boss-09') or p_boss is null then raise exception 'Boss inválido'; end if;
   if (select count(*) from public.bbb2_rooms where host_id=uid and created_at>now()-interval '1 hour')>=20 then raise exception 'Limite de salas por hora'; end if;
   for i in 1..30 loop
    code:=lpad(floor(random()*1000000)::int::text,6,'0');
@@ -137,7 +166,7 @@ begin
  end loop;end if;
  return t||jsonb_build_object('phase','finished','outcome',case when won then 'victory' else 'defeat' end,'firstVictoryIds',ids,'pending',null,'reviveQueue','[]'::jsonb);
 end;$$;
-create or replace function private.bbb2_advance(t jsonb) returns jsonb language plpgsql set search_path='' as $$
+create or replace function private.bbb2_advance_cursor(t jsonb) returns jsonb language plpgsql set search_path='' as $$
 declare n int; steps int; i int; a text; e jsonb; p jsonb; past jsonb; active boolean; roundno int:=(t->>'round')::int; old text:=case when coalesce((t->'split'->>'justCreated')::boolean,false) then t->'split'->>'triggeredBy' else private.bbb2_actor(t) end;
 begin
  if not exists(select 1 from jsonb_array_elements(t->'players') where (value->>'hp')::int>0) then return private.bbb2_finish(t,false);end if;
@@ -178,6 +207,64 @@ begin
  end if;
  return private.bbb2_advance(t);
 end;$$;
+
+
+-- One turn completion, including skipped frozen turns. Persist the marker while D20 is pending.
+create or replace function private.bbb2_advance(t jsonb) returns jsonb language plpgsql set search_path='' as $$
+declare ps jsonb:=t->'players';p jsonb;oldround int:=(t->>'round')::int;i int;j int;offsetno int;eligible int[]:='{}';health int[]:='{}';n int;completed int;actorid text;
+begin
+ if t->>'outcome' is not null then return t;end if;
+ if not coalesce((t->>'turnEffectsProcessed')::boolean,false) then
+  t:=t||jsonb_build_object('turnEffectsProcessed',true,'reviveQueue',coalesce(t->'reviveQueue','[]'));
+  for i in 0..jsonb_array_length(ps)-1 loop
+   p:=ps->i;
+   if (p->>'hp')::int>0 and coalesce((p->>'bleedTurns')::int,0)>0 then
+    p:=p||jsonb_build_object('hp',(p->>'hp')::int-1,'bleedTurns',(p->>'bleedTurns')::int-1);
+    t:=private.bbb2_log(t,(p->>'name')||': BLEED −1 HP ('||(p->>'bleedTurns')||' turnos restantes).');
+    if (p->>'hp')::int=0 then
+     if coalesce((p->>'reviveUsed')::boolean,false) then p:=jsonb_set(p,'{alive}','false');
+     else t:=jsonb_set(t,'{reviveQueue}',t->'reviveQueue'||jsonb_build_array(jsonb_build_object('id',p->>'id','damage',1)));end if;
+    end if;
+    ps:=jsonb_set(ps,array[i::text],p);
+   end if;
+  end loop;
+  t:=jsonb_set(t,'{players}',ps);
+  if jsonb_array_length(t->'reviveQueue')>0 then return private.bbb2_next_revive(t);end if;
+ end if;
+ t:=private.bbb2_advance_cursor(t-'turnEffectsProcessed');
+ if t->>'outcome' is not null then return t;end if;
+ ps:=t->'players';n:=jsonb_array_length(ps);
+ if (t->>'round')::int>oldround then
+  completed:=oldround;
+  if t->'boss'->>'id'='boss-06' and completed%3=0 then
+   for i in 0..n-1 loop if (ps->i->>'hp')::int>0 then eligible:=array_append(eligible,i);end if;end loop;
+   if cardinality(eligible)>0 then
+    j:=eligible[1+floor(random()*cardinality(eligible))::int];ps:=jsonb_set(ps,array[j::text,'frozen'],'true');
+    t:=private.bbb2_log(t,'Ice Lord congelou '||(ps->j->>'name')||': não pode agir nem receber cura até perder o próximo turno.');
+   end if;
+  elsif t->'boss'->>'id'='boss-08' and completed%n=0 then
+   for i in 0..n-1 loop if (ps->i->>'hp')::int>0 then eligible:=array_append(eligible,i);health:=array_append(health,(ps->i->>'hp')::int);end if;end loop;
+   if cardinality(eligible)>1 then
+    offsetno:=1+floor(random()*(cardinality(eligible)-1))::int;
+    for i in 1..cardinality(eligible) loop
+     j:=eligible[i];ps:=jsonb_set(ps,array[j::text,'hp'],to_jsonb(least((ps->j->>'maxHp')::int,health[1+(i-1+offsetno)%cardinality(eligible)])));
+    end loop;
+    t:=private.bbb2_log(t,'Trikster trocou a vida dos jogadores vivos!');
+   end if;
+  end if;
+  t:=jsonb_set(t,'{players}',ps);
+ end if;
+ actorid:=private.bbb2_actor(t);
+ for i in 0..n-1 loop
+  if ps->i->>'id'=actorid and coalesce((ps->i->>'frozen')::boolean,false) then
+   ps:=jsonb_set(ps,array[i::text],(ps->i)-'frozen');t:=jsonb_set(t,'{players}',ps);
+   t:=private.bbb2_log(t,(ps->i->>'name')||' perdeu este turno por estar congelado.');
+   return private.bbb2_advance(t);
+  end if;
+ end loop;
+ return t;
+end;$$;
+revoke all on function private.bbb2_advance_cursor(jsonb) from public,anon,authenticated;
 
 create or replace function public.bbb2_command(p_code text,p_action text,p_payload jsonb default '{}',p_revision bigint default -1,p_request uuid default gen_random_uuid()) returns jsonb
 language plpgsql security definer set search_path='' as $$
@@ -253,6 +340,7 @@ begin
   for i in 0..n-1 loop if ps->i->>'id'=a then idx:=i;end if;end loop;
   if t ? 'split' and a='boss' then child:=(t->'split'->'order'->((t->>'turn')::int)->>'child')::int;end if;
   dk:=case when a<>'boss' then a when t ? 'split' then t->'split'->'children'->child->>'key' else 'boss' end;
+  if a<>'boss' and coalesce((ps->idx->>'frozen')::boolean,false) and p_action in ('draw','attack','heal') then raise exception 'Jogador congelado';end if;
   if timeout then
    t:=private.bbb2_log(t,'Jogador ausente: turno ultrapassado.');
    if t->>'phase'='revive' then
@@ -307,6 +395,7 @@ begin
     if p_action='heal' then
      target:=p_payload->>'target';j:=-1;for i in 0..n-1 loop if ps->i->>'id'=target and (ps->i->>'hp')::int>0 then j:=i;end if;end loop;
      if j<0 then raise exception 'Alvo de cura inválido';end if;
+     if coalesce((ps->j->>'frozen')::boolean,false) then raise exception 'Não podes curar um jogador congelado';end if;
      amount:=least((ps->j->>'maxHp')::int-(ps->j->>'hp')::int,base+q*2+(p->>'heal')::int);
      ps:=jsonb_set(ps,array[j::text,'hp'],to_jsonb((ps->j->>'hp')::int+amount));t:=private.bbb2_log(t,(p->>'name')||' curou '||(ps->j->>'name')||': +'||amount||' HP.');
     else
@@ -316,20 +405,29 @@ begin
       if j<0 then raise exception 'Escolhe uma metade viva do Boss';end if;
       t:=jsonb_set(t,array['split','children',j::text,'hp'],to_jsonb(greatest(0,(t->'split'->'children'->j->>'hp')::int-dmg)));
       hp:=(t->'split'->'children'->0->>'hp')::int+(t->'split'->'children'->1->>'hp')::int;
+     elsif boss='boss-04' and t->'boss' ? 'firstAbsorbRound' and (t->>'round')::int>=(t->'boss'->>'firstAbsorbRound')::int and ((t->>'round')::int-(t->'boss'->>'firstAbsorbRound')::int)%2=0 then
+      hp:=least((t->'boss'->>'maxHp')::int,(t->'boss'->>'hp')::int+dmg);
+      t:=private.bbb2_log(t,'Xiongmao absorveu o ataque de '||(p->>'name')||': +'||(hp-(t->'boss'->>'hp')::int)||' HP.');dmg:=0;
      else hp:=greatest(0,(t->'boss'->>'hp')::int-dmg);end if;
      t:=jsonb_set(t,'{boss,hp}',to_jsonb(hp));t:=private.bbb2_log(t,(p->>'name')||' causou '||dmg||' de dano.');
+     if boss='boss-04' and hp>0 and hp<=(t->'boss'->>'maxHp')::int/5.0 and not(t->'boss' ? 'firstAbsorbRound') then
+      t:=jsonb_set(t,'{boss,firstAbsorbRound}',to_jsonb((t->>'round')::int+1));t:=private.bbb2_log(t,'Xiongmao despertou: absorção a partir da próxima ronda, ronda sim, ronda não.');
+     end if;
+     if boss='boss-07' and hp>0 and hp<=(t->'boss'->>'maxHp')::int*.3 and not coalesce((t->'boss'->>'doubleDamage')::boolean,false) then
+      t:=jsonb_set(t,'{boss,doubleDamage}','true');t:=private.bbb2_log(t,'Dot transformou-se em Black Hole! Os ataques causam dano ×2.');
+     end if;
      if boss='boss-03' and hp<=(t->'boss'->>'maxHp')::int/5.0 then t:=jsonb_set(t,'{boss,doubleDamage}','true');end if;
-     if boss='boss-04' and not(t ? 'split') and hp<=(t->'boss'->>'maxHp')::int/2.0 then
+     if boss='boss-05' and not(t ? 'split') and hp<=(t->'boss'->>'maxHp')::int/2.0 then
       splitorder:=jsonb_build_array(jsonb_build_object('child',0));
       for i in 0..n-1 loop
        if i=ceil(n/2.0)::int then splitorder:=splitorder||jsonb_build_array(jsonb_build_object('child',1));end if;
        splitorder:=splitorder||jsonb_build_array(jsonb_build_object('id',ps->i->>'id'));
       end loop;
       if n=1 then splitorder:=splitorder||jsonb_build_array(jsonb_build_object('child',1));end if;
-      t:=t||jsonb_build_object('split',jsonb_build_object('justCreated',true,'triggeredBy',a,'children',jsonb_build_array(jsonb_build_object('key','split-aoe','name','Boss 4 · AOE','hp',100,'maxHp',100),jsonb_build_object('key','split-normal','name','Boss 4 · Normal','hp',100,'maxHp',100)),'order',splitorder));
+      t:=t||jsonb_build_object('split',jsonb_build_object('justCreated',true,'triggeredBy',a,'children',jsonb_build_array(jsonb_build_object('key','split-aoe','name','Puppet Master · AOE','hp',100,'maxHp',100),jsonb_build_object('key','split-normal','name','Dummy · Normal','hp',100,'maxHp',100)),'order',splitorder));
       t:=jsonb_set(t,'{boss,hp}','200');t:=jsonb_set(t,'{boss,maxHp}','200');
       t:=jsonb_set(t,'{decks}',t->'decks'||jsonb_build_object('split-aoe',private.bbb2_deck('split-aoe'),'split-normal',private.bbb2_deck('boss')));
-      t:=private.bbb2_log(t,'O Boss 4 dividiu-se: duas metades com 100 HP.');
+      t:=private.bbb2_log(t,'O Boss 5 dividiu-se: duas metades com 100 HP.');
      end if;
     end if;
     t:=jsonb_set(t,'{players}',ps);t:=private.bbb2_advance(t);
@@ -351,7 +449,9 @@ begin
      for i in 0..n-1 loop
       p:=ps->i;if (p->>'hp')::int>0 and (aoe or p->>'id'=target) then
        dmg:=greatest(0,base-(p->>'defense')::int-(p->>'guard')::int);hp:=greatest(0,(p->>'hp')::int-dmg);
-       p:=p||jsonb_build_object('hp',hp,'guard',0);t:=private.bbb2_log(t,'O Boss atacou '||(p->>'name')||': '||dmg||' de dano.'||case when aoe then ' (AOE)' else '' end);
+       p:=p||jsonb_build_object('hp',hp,'guard',0);
+       if boss='boss-09' and (t->>'round')::int%2=1 then p:=jsonb_set(p,'{bleedTurns}','5');t:=private.bbb2_log(t,(p->>'name')||' ficou com BLEED durante 5 turnos.');end if;
+       t:=private.bbb2_log(t,'O Boss atacou '||(p->>'name')||': '||dmg||' de dano.'||case when aoe then ' (AOE)' else '' end);
        if hp=0 then
         if not(p->>'reviveUsed')::boolean then t:=jsonb_set(t,'{reviveQueue}',t->'reviveQueue'||jsonb_build_array(jsonb_build_object('id',p->>'id','damage',dmg)));
         else p:=jsonb_set(p,'{alive}','false');end if;
