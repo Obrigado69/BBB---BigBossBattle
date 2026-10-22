@@ -87,15 +87,22 @@
  };
  fightMode=()=>artScene(base(6)+hit(one(6,'singleplayer'),'SINGLEPLAYER',"selectFightMode('local',this)")+hit(one(6,'multiplayer'),'MULTIPLAYER',"selectFightMode('multiplayer',this)")+hit(box(7,55,46,36),'VOLTAR','goBack()'));
  function bossTitle(boss,page){const t=L[page].texts.find(t=>t.text.startsWith('BOSS 01'));return t?text('BOSS '+String(boss.number).padStart(2,'0')+' - '+boss.name.toUpperCase(),195,t.y,t.size,'middle',345):'';}
+ function bossFrameBounds(im){
+  const coords=[...(im.clip||'').matchAll(/(-?[\d.]+)\s+(-?[\d.]+)/g)].map(m=>[+m[1],+m[2]]),xs=coords.map(p=>p[0]),ys=coords.map(p=>p[1]);
+  return coords.length?{x:Math.min(...xs),y:Math.min(...ys),w:Math.max(...xs)-Math.min(...xs),h:Math.max(...ys)-Math.min(...ys)}:im;
+ }
+ function bossStill(boss,im,src=bossArtwork(boss)){
+  const {x,y,w,h}=bossFrameBounds(im),key='v2still'+(++uid),aspect=1920/1079,iw=Math.max(w,h*aspect),ih=Math.max(h,w/aspect),focus=boss.id==='boss-07'?.5:src===boss.splitImageSrc?.2:0;
+  return `<svg class="art-text-layer v2-svg boss-still-media" viewBox="0 0 390 844" preserveAspectRatio="none"><defs><clipPath id="${key}"><path d="${im.clip||`M${x} ${y}h${w}v${h}h${-w}Z`}"/></clipPath></defs><image href="${esc(src)}" x="${x-(iw-w)/2}" y="${y-(ih-h)*focus}" width="${iw}" height="${ih}" preserveAspectRatio="xMidYMid slice" clip-path="url(#${key})"/></svg>`;
+ }
  function bossVideo(boss,im){
   if(!boss.battleVideo)return '';
-  const coords=[...(im.clip||'').matchAll(/(-?[\d.]+)\s+(-?[\d.]+)/g)].map(m=>[+m[1],+m[2]]);
-  const xs=coords.map(p=>p[0]),ys=coords.map(p=>p[1]),x=coords.length?Math.min(...xs):im.x,y=coords.length?Math.min(...ys):im.y,w=coords.length?Math.max(...xs)-x:im.w,h=coords.length?Math.max(...ys)-y:im.h,clipId='v2video'+(++uid);
-  return `<svg class="art-text-layer v2-svg" viewBox="0 0 390 844" preserveAspectRatio="none"><defs><clipPath id="${clipId}"><path d="${im.clip||`M${x} ${y}h${w}v${h}h${-w}Z`}"/></clipPath></defs><foreignObject x="${x}" y="${y}" width="${w}" height="${h}" clip-path="url(#${clipId})"><video xmlns="http://www.w3.org/1999/xhtml" class="battle-boss-video" data-boss-video="${esc(boss.id)}" src="${boss.battleVideo}" poster="${bossArtwork(boss)}" autoplay muted loop playsinline preload="metadata" aria-label="${esc(boss.name)} animado" onerror="this.style.display='none'"></video></foreignObject></svg>`;
+  const {x,y,w,h}=bossFrameBounds(im),clipId='v2video'+(++uid);
+  return `<svg class="art-text-layer v2-svg" viewBox="0 0 390 844" preserveAspectRatio="none"><defs><clipPath id="${clipId}"><path d="${im.clip||`M${x} ${y}h${w}v${h}h${-w}Z`}"/></clipPath></defs><foreignObject x="${x}" y="${y}" width="${w}" height="${h}" clip-path="url(#${clipId})"><video xmlns="http://www.w3.org/1999/xhtml" class="battle-boss-video" data-boss-video="${esc(boss.id)}" src="${boss.battleVideo}" autoplay muted loop playsinline preload="auto" aria-label="${esc(boss.name)} animado"></video></foreignObject></svg>`;
  }
  function bossPanel(page,boss,swipe=false){
   const frame=images(page,'box').find(im=>im.w>350),im=one(page,'boss');if(!frame||!im)return '';
-  let out=`<div class="boss-position"><div class="boss-slide">${image(frame)}${image(im,bossArtwork(boss))}${bossVideo(boss,im)}${bossTitle(boss,page)}</div>`;
+  let out=`<div class="boss-position"><div class="boss-slide">${image(frame)}${boss.battleVideo?bossVideo(boss,im):bossStill(boss,im)}${bossTitle(boss,page)}</div>`;
   if(swipe){const index=BOSS_CATALOG.indexOf(boss);out+=`<div class="boss-swipe-zone v2-boss-swipe" style="${rect(frame)}" role="group" aria-label="Selecionar Boss: ${esc(boss.name)}" onpointerdown="bossSwipeDown(event)" onpointerup="bossSwipeUp(event)" onpointercancel="bossSwipeStart=null"><button class="boss-arrow previous" aria-label="Boss anterior" onclick="changeBoss(-1)" ${index===0?'disabled':''}>‹</button><button class="boss-arrow next" aria-label="Próximo Boss" onclick="changeBoss(1)" ${index===BOSS_CATALOG.length-1?'disabled':''}>›</button></div>`;}
   return out+'</div>';
  }
@@ -128,7 +135,7 @@
  multiplayerEntry=()=>{
   const code=String(state.multiplayerRoomCode||'').replace(/\D/g,'').slice(0,6),known=roomFromCode(),boss=BOSS_CATALOG.find(b=>b.id===known?.bossId);
   let out=base(22,{skipImage:im=>['boss','portrait'].includes(im.asset),skipText:t=>t.text==='123456'||t.text.startsWith('BOSS 01')});
-  const pr=one(22,'portrait');out+=nativePortrait(boss?{photo:boss.art?bbbAsset(boss.art+'.webp'):null}:null,pr)+text(boss?'BOSS '+String(boss.number).padStart(2,'0')+' - '+boss.name.toUpperCase():'?',195,boss?443.306:335,boss?16.5772:38,'middle',340);
+  const pr=one(22,'portrait');out+=nativePortrait(boss?{photo:bossArtwork(boss)}:null,pr)+text(boss?'BOSS '+String(boss.number).padStart(2,'0')+' - '+boss.name.toUpperCase():'?',195,boss?443.306:335,boss?16.5772:38,'middle',340);
   out+=`<input id="v2-room-code" class="v2-room-input" style="${combatPos(66,550,247,52)}" aria-label="Código da dungeon — 6 dígitos" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" autocomplete="off" placeholder="000000" value="${code}" oninput="updateDungeonCode(this)" onkeydown="if(event.key==='Enter'){event.preventDefault();submitDungeonCode()}">`;
   out+=hit(images(22,'box').at(-1),'ENTRAR','submitDungeonCode()',{disabled:code.length!==6,cls:'v2-enter-room'})+hit(box(7,55,46,36),'VOLTAR','goBack()');return artScene(out);
  };
@@ -157,7 +164,7 @@
  }
  lobbyCharacterOverlay=()=>state.screen==='multiplayerLobby'&&lobbyCharacterPicker?characterPicker('online',lobbyOwnedCharacters(),lobbyCharacterPicker.selectedId):'';
  combatTimeline=()=>{
-  const t=b(),seq=t.split?t.split.order.filter(splitEntryActive).map(entry=>entry.child!==undefined?{id:t.split.children[entry.child].key,name:t.split.children[entry.child].name}:t.players.find(p=>p.id===entry.id)):[...live(),{id:'boss',name:bossName(),photo:battleBoss().art||battleBoss().imageSrc?bossImage():null}];
+  const t=b(),seq=t.split?t.split.order.filter(splitEntryActive).map(entry=>entry.child!==undefined?{id:t.split.children[entry.child].key,name:t.split.children[entry.child].name,photo:entry.child===0?bossArtwork(battleBoss()):battleBoss().splitImageSrc}:t.players.find(p=>p.id===entry.id)):[...live(),{id:'boss',name:bossName(),photo:bossImage()}];
   const current=seq.findIndex(p=>p.id===(actor().splitKey||actor().id)),past=t.completedTurns||[],xs=[22.654,69.961,117.264,164.78,229.904,277.21,324.514];
   return `<div id="turn-strip" class="turn-strip" data-index="${timelineIndex}">`+[-3,-2,-1,0,1,2,3].map((offset,i)=>{
    const id=offset<0?past[past.length+offset]:seq[(Math.max(0,current)+offset)%seq.length]?.id,p=seq.find(p=>p.id===id)||t.players.find(p=>p.id===id)||t.split?.children.find(c=>c.key===id),w=offset===0?60.44:42.12,h=offset===0?65.9:45.93,r=box(xs[i],offset===0?45.13:55.12,w,h);
@@ -172,8 +179,7 @@
   const t=b(),a=actor(),page=t.multiplayer?19:10,isBoss=a.id==='boss',auto=isBoss&&automaticBoss(),boss=battleBoss();
   let out=base(page,{skipImage:im=>['portrait','hp','card','boss','attack','heal'].includes(im.asset)||im.asset==='box'&&im.w>350,skipText:()=>true});
   out+=combatTimeline();
-  const frame=images(page,'box').find(im=>im.w>350),im=one(page,'boss');out+=image(frame)+image(im,bossImage());
-  out+=bossVideo(boss,im);
+  const frame=images(page,'box').find(im=>im.w>350),im=one(page,'boss');out+=image(frame)+(boss.battleVideo?bossVideo(boss,im):bossStill(boss,im,bossImage()));
   out+=text(bossName().toUpperCase(),195,150.19,20.2524,'middle',350);
   if(t.split){t.split.children.forEach((c,i)=>{const y=[307.2482086,326.1691071][i];out+=combatHp(c.key,c,17.597837,y,354.8043346,29.1581222,true,true);});}
   else out+=combatHp('boss',t.boss,14.31,316.12,361.37,29.7,true)+(showBossHp()?text(t.boss.hp+' / '+t.boss.maxHp+' HP',195,355.714,14.13):'');
